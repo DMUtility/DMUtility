@@ -3,17 +3,32 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.composeHotReload)
+    alias(notation = libs.plugins.kotlinMultiplatform)
+    alias(notation = libs.plugins.androidApplication)
+    alias(notation = libs.plugins.composeMultiplatform)
+    alias(notation = libs.plugins.composeCompiler)
+    alias(notation = libs.plugins.composeHotReload)
+}
+
+object AppConfig {
+    /** 包名 */
+    const val PACKAGE_NAME: String = "com.wyq0918dev.dmutillity"
+
+    /** 版本名 */
+    const val VERSION_NAME: String = "1.0.0"
+
+    /** 版本号 */
+    const val VERSION_CODE: Int = 1
+}
+
+object AndroidConfig {
+    const val TARGET_SDK: Int = 36
+    const val MIN_SDK: Int = 24
 }
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class) compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
@@ -22,22 +37,24 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
+//            implementation(dependencyNotation = project(path = ":flutter"))
+//            implementation(dependencyNotation = project(path = ":flutter_mixed"))
+            implementation(dependencyNotation = compose.preview)
+            implementation(dependencyNotation = libs.androidx.activity.compose)
         }
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(dependencyNotation = compose.runtime)
+            implementation(dependencyNotation = compose.foundation)
+            implementation(dependencyNotation = compose.material3)
+            implementation(dependencyNotation = compose.ui)
+            implementation(dependencyNotation = compose.components.resources)
+            implementation(dependencyNotation = compose.components.uiToolingPreview)
+            implementation(dependencyNotation = libs.androidx.lifecycle.viewmodelCompose)
+            implementation(dependencyNotation = libs.androidx.lifecycle.runtimeCompose)
         }
         jvmMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutinesSwing)
+            implementation(dependencyNotation = compose.desktop.currentOs)
+            implementation(dependencyNotation = libs.kotlinx.coroutinesSwing)
         }
     }
 }
@@ -53,6 +70,12 @@ android {
         versionCode = AppConfig.VERSION_CODE
         versionName = AppConfig.VERSION_NAME
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -63,10 +86,7 @@ android {
             isMinifyEnabled = false
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
+
 }
 
 compose.desktop {
@@ -91,5 +111,5 @@ compose.desktop {
 }
 
 dependencies {
-    debugImplementation(compose.uiTooling)
+    debugImplementation(dependencyNotation = compose.uiTooling)
 }
