@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(
@@ -29,16 +30,14 @@ class MainActivity : ComponentActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.isNavigationBarContrastEnforced = false
         }
-
-
         setContent {
             DMUtilityApp()
         }
     }
-}
 
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    DMUtilityApp()
+    @Preview
+    @Composable
+    private fun AppAndroidPreview() {
+        DMUtilityApp()
+    }
 }

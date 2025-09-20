@@ -14,7 +14,6 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -48,7 +47,7 @@ fun DMUtilityApp() {
 
 
 
-    MaterialTheme {
+    DMUtilityTheme {
 
         NavigationSuiteScaffold(
             modifier = Modifier.fillMaxSize(),
@@ -125,9 +124,6 @@ fun DMUtilityApp() {
                         title = {
                             Text(text = stringResource(resource = Res.string.app_name))
                         },
-//                        colors = TopAppBarDefaults.topAppBarColors(
-//                            containerColor = MaterialTheme.colorScheme.primaryContainer
-//                        )
                     )
                 },
             ) { innerPadding ->
