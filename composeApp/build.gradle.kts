@@ -7,6 +7,20 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.kotlinSerialization)
+}
+
+object AppConfig {
+    const val PACKAGE_NAME: String = "com.wyq0918dev.dmutility"
+
+    const val COMPILE_SDK: Int = 36 // 编译版本 Android 16
+    const val TARGET_SDK: Int = 36 // 目标版本 Android 16
+    const val MIN_SDK: Int = 26 // 最低兼容 Android 8.0
+}
+
+object AppVersion {
+    const val VERSION_NAME: String = "1.0.0"
+    const val VERSION_CODE: Int = 1
 }
 
 kotlin {
@@ -15,9 +29,9 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     jvm()
-    
+
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
@@ -28,10 +42,16 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
+            implementation(compose.material3AdaptiveNavigationSuite)
+            implementation(compose.materialIconsExtended)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.androidx.navigation.compose)
+            implementation(libs.kotlinx.serialization.json)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -44,15 +64,15 @@ kotlin {
 }
 
 android {
-    namespace = "com.wyq0918dev.dmutility"
-    compileSdk = 36
+    namespace = AppConfig.PACKAGE_NAME
+    compileSdk = AppConfig.COMPILE_SDK
 
     defaultConfig {
-        applicationId = "com.wyq0918dev.dmutility"
-        minSdk = 26
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = AppConfig.PACKAGE_NAME
+        minSdk = AppConfig.MIN_SDK
+        targetSdk = AppConfig.TARGET_SDK
+        versionCode = AppVersion.VERSION_CODE
+        versionName = AppVersion.VERSION_NAME
     }
     packaging {
         resources {
@@ -70,18 +90,27 @@ android {
     }
 }
 
-dependencies {
-    debugImplementation(compose.uiTooling)
-}
-
 compose.desktop {
     application {
-        mainClass = "com.wyq0918dev.dmutility.MainKt"
+        mainClass = "${AppConfig.PACKAGE_NAME}.MainKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.wyq0918dev.dmutility"
-            packageVersion = "1.0.0"
+            targetFormats(
+                TargetFormat.Dmg,
+                TargetFormat.Msi,
+                TargetFormat.Deb,
+            )
+            packageName = AppConfig.PACKAGE_NAME
+            packageVersion = AppVersion.VERSION_NAME
+
+            windows {
+                menu = true
+                shortcut = true
+            }
         }
     }
+}
+
+dependencies {
+    debugImplementation(compose.uiTooling)
 }
