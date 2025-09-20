@@ -93,6 +93,8 @@ android {
 compose.desktop {
     application {
         mainClass = "${AppConfig.PACKAGE_NAME}.MainKt"
+//        args += listOf("-customArgument")
+        jvmArgs += listOf("-Xmx2G")
 
         nativeDistributions {
             targetFormats(
@@ -104,6 +106,9 @@ compose.desktop {
             packageVersion = AppVersion.VERSION_NAME
 
             windows {
+                console = true
+                dirChooser = true
+                perUserInstall = false
                 menu = true
                 shortcut = true
             }

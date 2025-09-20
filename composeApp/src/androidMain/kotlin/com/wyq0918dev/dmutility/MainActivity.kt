@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
-            App()
+            DMUtilityApp()
         }
     }
 }
@@ -40,5 +40,5 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun AppAndroidPreview() {
-    App()
+    DMUtilityApp()
 }

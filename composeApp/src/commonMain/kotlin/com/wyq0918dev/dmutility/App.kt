@@ -2,7 +2,6 @@ package com.wyq0918dev.dmutility
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.LocalContextMenuData
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,7 +39,7 @@ object Home
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App() {
+fun DMUtilityApp() {
     var showContent by remember { mutableStateOf(false) }
 
     val scrollState = rememberScrollState()
@@ -126,6 +125,9 @@ fun App() {
                         title = {
                             Text(text = stringResource(resource = Res.string.app_name))
                         },
+//                        colors = TopAppBarDefaults.topAppBarColors(
+//                            containerColor = MaterialTheme.colorScheme.primaryContainer
+//                        )
                     )
                 },
             ) { innerPadding ->
@@ -167,5 +169,5 @@ fun App() {
 @Preview
 @Composable
 private fun AppPreview() {
-    App()
+    DMUtilityApp()
 }

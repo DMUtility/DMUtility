@@ -8,16 +8,12 @@ import dmutility.composeapp.generated.resources.compose_multiplatform
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
-fun main() {
-    application {
-        Window(
-            onCloseRequest = {
-                exitApplication()
-            },
-            icon = painterResource(resource = Res.drawable.compose_multiplatform),
-            title = stringResource(resource = Res.string.app_name),
-        ) {
-            App()
-        }
+fun main() = application {
+    Window(
+        onCloseRequest = ::exitApplication,
+        icon = painterResource(resource = Res.drawable.compose_multiplatform),
+        title = stringResource(resource = Res.string.app_name),
+    ) {
+        DMUtilityApp()
     }
 }
