@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.core.view.WindowCompat
 
 class MainActivity : ComponentActivity() {
@@ -35,7 +36,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @Preview
+    @Preview(
+        device = "id:pixel_9",
+        apiLevel = 36,
+        locale = "zh-rCN",
+        showBackground = true,
+        showSystemUi = true,
+        wallpaper = Wallpapers.BLUE_DOMINATED_EXAMPLE,
+    )
     @Composable
     private fun AppAndroidPreview() {
         DMUtilityApp()
