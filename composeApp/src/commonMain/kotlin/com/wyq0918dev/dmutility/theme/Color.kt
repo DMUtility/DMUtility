@@ -1,4 +1,4 @@
-package com.wyq0918dev.dmutility
+package com.wyq0918dev.dmutility.theme
 
 import androidx.compose.ui.graphics.Color
 

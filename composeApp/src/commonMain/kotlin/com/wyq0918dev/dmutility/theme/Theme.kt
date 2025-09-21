@@ -1,10 +1,12 @@
-package com.wyq0918dev.dmutility
+package com.wyq0918dev.dmutility.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import com.wyq0918dev.dmutility.platform
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -85,17 +87,20 @@ private val darkScheme = darkColorScheme(
 @Composable
 fun DMUtilityTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit,
+    dynamicColor: Boolean = true,
+    content: @Composable () -> Unit,
 ) {
-    val colorScheme = when {
+    val colorScheme: ColorScheme = when {
+        dynamicColor && platform.getDynamicColorScheme(darkTheme) != null -> {
+            platform.getDynamicColorScheme(darkTheme)!!
+        }
+
         darkTheme -> darkScheme
         else -> lightScheme
     }
-
     MaterialTheme(
         colorScheme = colorScheme,
         typography = AppTypography,
         content = content,
     )
 }
-

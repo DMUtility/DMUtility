@@ -1,7 +1,3 @@
 package com.wyq0918dev.dmutility
 
-class JVMPlatform : Platform {
-    override val name: String = "Java ${System.getProperty("java.version")}"
-}
-
-actual fun getPlatform(): Platform = JVMPlatform()
+actual val platform: IPlatform = JVMPlatform()

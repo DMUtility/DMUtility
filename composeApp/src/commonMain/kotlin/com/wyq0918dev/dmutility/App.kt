@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.wyq0918dev.dmutility.theme.DMUtilityTheme
 import dmutility.composeapp.generated.resources.Res
 import dmutility.composeapp.generated.resources.app_name
 import dmutility.composeapp.generated.resources.compose_multiplatform
@@ -48,7 +49,6 @@ fun DMUtilityApp() {
 
 
     DMUtilityTheme {
-
         NavigationSuiteScaffold(
             modifier = Modifier.fillMaxSize(),
             navigationSuiteItems = {
@@ -66,7 +66,7 @@ fun DMUtilityApp() {
                     label = {
                         Text(text = "Home")
                     },
-                   alwaysShowLabel = false
+                    alwaysShowLabel = false
                 )
                 item(
                     selected = false,
