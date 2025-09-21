@@ -73,6 +73,10 @@ android {
         targetSdk = AppConfig.TARGET_SDK
         versionCode = AppVersion.VERSION_CODE
         versionName = AppVersion.VERSION_NAME
+
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+        }
     }
     packaging {
         resources {
