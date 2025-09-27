@@ -39,9 +39,13 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FlutterDash
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.twotone.Home
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
@@ -60,6 +64,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -72,6 +80,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -81,6 +90,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import androidx.window.core.layout.WindowWidthSizeClass
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.google.accompanist.imageloading.rememberDrawablePainter
@@ -97,11 +114,123 @@ import com.wyq0918dev.dmutility.ui.theme.CapsuleWidth
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 import com.wyq0918dev.dmutility.ui.utils.NoOnClick
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
+@Serializable
+data object Home
+
+@Serializable
+data object Settings
+
+@Serializable
+data object Installer
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ActivityMain() {
 
-    UnderLayer()
+    val appDestination = arrayListOf(
+        AppDestination(
+            label = "Home",
+            route = Home,
+            icon = Icons.Outlined.Home,
+            selectedIcon = Icons.Filled.Home,
+        ),
+        AppDestination(
+            label = "Settings",
+            route = Settings,
+            icon = Icons.Outlined.Settings,
+            selectedIcon = Icons.Filled.Settings,
+        ),
+    )
+    val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    val customNavSuiteType: NavigationSuiteType = with(
+        receiver = currentWindowAdaptiveInfo(),
+    ) {
+        return@with when (windowSizeClass.windowWidthSizeClass) {
+            WindowWidthSizeClass.COMPACT -> NavigationSuiteType.NavigationBar
+            WindowWidthSizeClass.MEDIUM -> NavigationSuiteType.NavigationRail
+            WindowWidthSizeClass.EXPANDED -> NavigationSuiteType.NavigationDrawer
+            else -> NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(
+                adaptiveInfo = this@with
+            )
+        }
+    }
+    NavigationSuiteScaffold(
+        navigationSuiteItems = {
+            appDestination.forEach { destination ->
+                val isCurrent: Boolean = currentDestination?.hierarchy?.any {
+                    return@any it.hasRoute(route = destination.route::class)
+                } == true
+                item(
+                    icon = {
+                        Icon(
+                            imageVector = if (isCurrent) {
+                                destination.selectedIcon
+                            } else {
+                                destination.icon
+                            },
+                            contentDescription = destination.label,
+                        )
+                    },
+                    modifier = Modifier.wrapContentSize(),
+                    label = {
+                        Text(text = destination.label)
+                    },
+                    selected = isCurrent,
+                    onClick = {
+                        navController.navigate(
+                            route = destination.route,
+                        ) {
+                            popUpTo(
+                                id = navController.graph.findStartDestination().id,
+                            ) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    alwaysShowLabel = false,
+                )
+            }
+        },
+        modifier = Modifier.fillMaxSize(),
+        layoutType = customNavSuiteType,
+    ) {
+        NavHost(
+            navController = navController,
+            startDestination = Home,
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            composable<Home> {
+
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = {
+                                Text(stringResource(R.string.app_name))
+                            }
+                        )
+                    }
+                ) { innerPadding ->
+                    Box(modifier = Modifier.fillMaxSize().padding(innerPadding), contentAlignment = Alignment.Center) {
+                        Text("Hello World")
+                    }
+                }
+            }
+            composable<Settings> {
+                UnderLayer()
+            }
+            composable<Installer> {
+            }
+        }
+    }
+
+
+
 }
 
 @Preview
