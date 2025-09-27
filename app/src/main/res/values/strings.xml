@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DMUtility</string>
+    <string name="inspection_mode_text">InspectionMode</string>
+</resources>
