@@ -52,6 +52,7 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -263,84 +264,88 @@ fun UnderLayer(modifier: Modifier = Modifier) {
         topBar = {
             ULTopBar()
         },
-        bottomBar = {
-            BottomAppBar(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .clip(
-                        shape = ContinuousRoundedRectangle(
-                            topStart = 16.dp,
-                            topEnd = 16.dp,
-                        ),
-                    ),
-                containerColor = Color(color = 0xff787493),
-                actions = {
-                    IconButton(
-                        onClick = {
-                            showDialog = true
-                        },
-                    ) {
-                        if (showDialog) AlertDialog(
-                            onDismissRequest = {
-                                showDialog = false
-                            },
-                            confirmButton = {
-                                TextButton(
-                                    onClick = {
-                                        showDialog = false
-                                    },
-                                ) {
-                                    Text(text = "确定")
-                                }
-                            },
-                            icon = {
-                                Icon(
-                                    imageVector = Icons.Filled.Android,
-                                    contentDescription = null,
-                                )
-                            },
-                            iconContentColor = AndroidGreen,
-                            title = {
-                                Text(text = "Android")
-                            },
-                            text = {
-                                Text(text = "Android API ${Build.VERSION.SDK_INT}")
-                            },
-                        )
-                        Icon(
-                            imageVector = Icons.Filled.Android,
-                            contentDescription = null,
-                            tint = AndroidGreen,
-                        )
-                    }
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight(),
-                        text = "Android",
-                        style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        textAlign = TextAlign.Left,
-                    )
-                },
-                floatingActionButton = {
-                    Row {
-                        NavBlock(
-                            modifier = Modifier.padding(end = 4.dp),
-                            pageState = pageState,
-                        )
-                        HomeFAB(
-                            modifier = Modifier.padding(start = 4.dp),
-                            popBackStack = {},
-                        )
-                    }
-                },
-            )
+//        bottomBar = {
+//            BottomAppBar(
+//                modifier = modifier
+//                    .fillMaxWidth()
+//                    .wrapContentHeight()
+//                    .clip(
+//                        shape = ContinuousRoundedRectangle(
+//                            topStart = 16.dp,
+//                            topEnd = 16.dp,
+//                        ),
+//                    ),
+//                containerColor = Color(color = 0xff787493),
+//                actions = {
+//                    IconButton(
+//                        onClick = {
+//                            showDialog = true
+//                        },
+//                    ) {
+//                        if (showDialog) AlertDialog(
+//                            onDismissRequest = {
+//                                showDialog = false
+//                            },
+//                            confirmButton = {
+//                                TextButton(
+//                                    onClick = {
+//                                        showDialog = false
+//                                    },
+//                                ) {
+//                                    Text(text = "确定")
+//                                }
+//                            },
+//                            icon = {
+//                                Icon(
+//                                    imageVector = Icons.Filled.Android,
+//                                    contentDescription = null,
+//                                )
+//                            },
+//                            iconContentColor = AndroidGreen,
+//                            title = {
+//                                Text(text = "Android")
+//                            },
+//                            text = {
+//                                Text(text = "Android API ${Build.VERSION.SDK_INT}")
+//                            },
+//                        )
+//                        Icon(
+//                            imageVector = Icons.Filled.Android,
+//                            contentDescription = null,
+//                            tint = AndroidGreen,
+//                        )
+//                    }
+//                    Text(
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .wrapContentHeight(),
+//                        text = "Android",
+//                        style = MaterialTheme.typography.titleMedium,
+//                        maxLines = 1,
+//                        overflow = TextOverflow.Ellipsis,
+//                        color = Color.White,
+//                        fontSize = 16.sp,
+//                        textAlign = TextAlign.Left,
+//                    )
+//                },
+//                floatingActionButton = {
+//
+//                },
+//            )
+//        },
+        floatingActionButton = {
+            Row {
+                NavBlock(
+                    modifier = Modifier.padding(end = 4.dp),
+                    pageState = pageState,
+                )
+                HomeFAB(
+                    modifier = Modifier.padding(start = 4.dp),
+                    popBackStack = {},
+                )
+            }
         },
+        floatingActionButtonPosition = FabPosition.End,
         containerColor = AppBackground,
     ) { innerPadding ->
         HorizontalPager(
