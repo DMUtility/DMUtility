@@ -113,6 +113,7 @@ import com.wyq0918dev.dmutility.ui.theme.CapsuleHeight
 import com.wyq0918dev.dmutility.ui.theme.CapsuleIndent
 import com.wyq0918dev.dmutility.ui.theme.CapsuleWidth
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
+import com.wyq0918dev.dmutility.ui.theme.TrebleTheme
 import com.wyq0918dev.dmutility.ui.utils.NoOnClick
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -223,7 +224,9 @@ fun ActivityMain() {
                 }
             }
             composable<Settings> {
-                UnderLayer()
+                TrebleTheme {
+                    UnderLayer()
+                }
             }
             composable<Installer> {
             }
@@ -333,18 +336,18 @@ fun UnderLayer(modifier: Modifier = Modifier) {
 //                },
 //            )
 //        },
-        floatingActionButton = {
-            Row {
-                NavBlock(
-                    modifier = Modifier.padding(end = 4.dp),
-                    pageState = pageState,
-                )
-                HomeFAB(
-                    modifier = Modifier.padding(start = 4.dp),
-                    popBackStack = {},
-                )
-            }
-        },
+//        floatingActionButton = {
+//            Row {
+//                NavBlock(
+//                    modifier = Modifier.padding(end = 4.dp),
+//                    pageState = pageState,
+//                )
+//                HomeFAB(
+//                    modifier = Modifier.padding(start = 4.dp),
+//                    popBackStack = {},
+//                )
+//            }
+//        },
         floatingActionButtonPosition = FabPosition.End,
         containerColor = AppBackground,
     ) { innerPadding ->
@@ -548,7 +551,7 @@ fun ULTopBar(
                 .wrapContentHeight(),
             title = {
                 Text(
-                    text = stringResource(id = R.string.app_name),
+                    text = "Treble",
                     color = Color.White,
                 )
             },
