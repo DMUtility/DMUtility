@@ -1,7 +1,6 @@
 package com.wyq0918dev.dmutility.ui
 
 import android.content.Context
-import android.os.Build
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -11,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.defaultMinSize
@@ -36,34 +36,24 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FlutterDash
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.twotone.Home
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButtonDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.VerticalDivider
@@ -71,28 +61,27 @@ import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
+import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
+import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -115,35 +104,10 @@ import com.wyq0918dev.dmutility.ui.theme.CapsuleWidth
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 import com.wyq0918dev.dmutility.ui.utils.NoOnClick
 import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
-
-@Serializable
-data object Home
-
-@Serializable
-data object Settings
-
-@Serializable
-data object Installer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ActivityMain() {
-
-    val appDestination = arrayListOf(
-        AppDestination(
-            label = "Home",
-            route = Home,
-            icon = Icons.Outlined.Home,
-            selectedIcon = Icons.Filled.Home,
-        ),
-        AppDestination(
-            label = "Settings",
-            route = Settings,
-            icon = Icons.Outlined.Settings,
-            selectedIcon = Icons.Filled.Settings,
-        ),
-    )
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -203,10 +167,10 @@ fun ActivityMain() {
     ) {
         NavHost(
             navController = navController,
-            startDestination = Home,
+            startDestination = HomeDestination,
             modifier = Modifier.fillMaxSize(),
         ) {
-            composable<Home> {
+            composable<HomeDestination> {
 
                 Scaffold(
                     topBar = {
@@ -217,16 +181,54 @@ fun ActivityMain() {
                         )
                     }
                 ) { innerPadding ->
-                    Box(modifier = Modifier.fillMaxSize().padding(innerPadding), contentAlignment = Alignment.Center) {
-                        Text("Hello World")
+                    Column(
+                        modifier = Modifier.fillMaxSize().padding(paddingValues = innerPadding)
+                    ) {
+                        CarouselExample_MultiBrowse()
+                    }
+//                    Box(modifier = Modifier.fillMaxSize().padding(innerPadding), contentAlignment = Alignment.Center) {
+//                        Text("Hello World")
+//                    }
+                }
+            }
+            composable<ToolsDestination> {
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = {
+                                Text(text = "Tools")
+                            }
+                        )
+                    }
+                ) { innerPadding ->
+                    Column(
+                        modifier = Modifier.fillMaxSize().padding(paddingValues = innerPadding)
+                    ) {
+
                     }
                 }
             }
-            composable<Settings> {
+            composable<DiscoverDestination> {
                 UnderLayer()
             }
-            composable<Installer> {
+            composable<SettingsDestination> {
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = {
+                                Text(text = "Settings")
+                            }
+                        )
+                    }
+                ) { innerPadding ->
+                    Column(
+                        modifier = Modifier.fillMaxSize().padding(paddingValues = innerPadding)
+                    ) {
+
+                    }
+                }
             }
+
         }
     }
 
@@ -242,9 +244,50 @@ private fun ActivityMainPreview() {
     }
 }
 
+data class CarouselItem(
+    val id: Int,
+    val imageResId: Int,
+    val contentDescription: String
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CarouselExample_MultiBrowse() {
 
 
+    val items = remember {
+        listOf(
+            CarouselItem(0, R.mipmap.ic_launcher, "ic_launcher"),
+            CarouselItem(1, R.mipmap.ic_freefeos, "ic_freefeos"),
+            CarouselItem(2, R.mipmap.ic_ecosedkit, "ic_ecosedkit"),
+            CarouselItem(3, R.mipmap.ic_ebkit, "ic_ebkit"),
+        )
+    }
 
+    val state = rememberCarouselState { items.count() }
+    val context = LocalContext.current
+
+    HorizontalMultiBrowseCarousel(
+        state = state,
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(top = 16.dp, bottom = 16.dp),
+        preferredItemWidth = 186.dp,
+        itemSpacing = 8.dp,
+        contentPadding = PaddingValues(horizontal = 16.dp)
+    ) { i ->
+        val item = items[i]
+        Image(
+            modifier = Modifier
+                .height(height = 205.dp)
+                .maskClip(shape = MaterialTheme.shapes.extraLarge),
+            painter = rememberDrawablePainter(ContextCompat.getDrawable(context, item.imageResId)),
+            contentDescription = item.contentDescription,
+            contentScale = ContentScale.Crop
+        )
+    }
+}
 
 
 
@@ -253,100 +296,13 @@ private fun ActivityMainPreview() {
 @Composable
 fun UnderLayer(modifier: Modifier = Modifier) {
     val coroutineScope = rememberCoroutineScope()
-    val pageState = rememberPagerState(
-        pageCount = { appDestination.size },
-    )
-    var showDialog by remember {
-        mutableStateOf(value = false)
-    }
+    val pageState = rememberPagerState { discoverDestination.size }
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
             ULTopBar()
         },
-//        bottomBar = {
-//            BottomAppBar(
-//                modifier = modifier
-//                    .fillMaxWidth()
-//                    .wrapContentHeight()
-//                    .clip(
-//                        shape = ContinuousRoundedRectangle(
-//                            topStart = 16.dp,
-//                            topEnd = 16.dp,
-//                        ),
-//                    ),
-//                containerColor = Color(color = 0xff787493),
-//                actions = {
-//                    IconButton(
-//                        onClick = {
-//                            showDialog = true
-//                        },
-//                    ) {
-//                        if (showDialog) AlertDialog(
-//                            onDismissRequest = {
-//                                showDialog = false
-//                            },
-//                            confirmButton = {
-//                                TextButton(
-//                                    onClick = {
-//                                        showDialog = false
-//                                    },
-//                                ) {
-//                                    Text(text = "确定")
-//                                }
-//                            },
-//                            icon = {
-//                                Icon(
-//                                    imageVector = Icons.Filled.Android,
-//                                    contentDescription = null,
-//                                )
-//                            },
-//                            iconContentColor = AndroidGreen,
-//                            title = {
-//                                Text(text = "Android")
-//                            },
-//                            text = {
-//                                Text(text = "Android API ${Build.VERSION.SDK_INT}")
-//                            },
-//                        )
-//                        Icon(
-//                            imageVector = Icons.Filled.Android,
-//                            contentDescription = null,
-//                            tint = AndroidGreen,
-//                        )
-//                    }
-//                    Text(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .wrapContentHeight(),
-//                        text = "Android",
-//                        style = MaterialTheme.typography.titleMedium,
-//                        maxLines = 1,
-//                        overflow = TextOverflow.Ellipsis,
-//                        color = Color.White,
-//                        fontSize = 16.sp,
-//                        textAlign = TextAlign.Left,
-//                    )
-//                },
-//                floatingActionButton = {
-//
-//                },
-//            )
-//        },
-//        floatingActionButton = {
-//            Row {
-//                NavBlock(
-//                    modifier = Modifier.padding(end = 4.dp),
-//                    pageState = pageState,
-//                )
-//                HomeFAB(
-//                    modifier = Modifier.padding(start = 4.dp),
-//                    popBackStack = {},
-//                )
-//            }
-//        },
-//        floatingActionButtonPosition = FabPosition.End,
-//        containerColor = AppBackground,
     ) { innerPadding ->
         HorizontalPager(
             state = pageState,
@@ -355,7 +311,7 @@ fun UnderLayer(modifier: Modifier = Modifier) {
                 .padding(paddingValues = innerPadding),
             userScrollEnabled = false,
         ) { page ->
-            when (appDestination[page].route) {
+            when (discoverDestination[page].route) {
                 DashboardPage -> DashboardPage(
                     popBackStack = {},
                     animateToEcosed = {
@@ -420,7 +376,7 @@ fun NavBlock(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            appDestination.forEach { page ->
+            discoverDestination.forEach { page ->
                 val isCurrent = pageState?.isCurrentDestination(route = page.route)
                 IconButton(
                     onClick = {
@@ -503,7 +459,7 @@ fun ULActionBar(
     title: @Composable () -> Unit = {},
     navigationIcon: @Composable () -> Unit = {},
 ) {
-    ElevatedCard (
+    Card(
         modifier = modifier
             .fillMaxWidth()
             .height(height = 56.dp),
@@ -674,7 +630,7 @@ fun DashboardPage(
             popBackStack = popBackStack,
             animateToFlutter = animateToEcosed,
         )
-        Surface(
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
@@ -682,7 +638,9 @@ fun DashboardPage(
                     start = 16.dp, top = 15.dp, end = 16.dp, bottom = 15.dp
                 ),
             shape = ContinuousRoundedRectangle(size = 16.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHighest,
+//            colors = CardDefaults.elevatedCardColors(
+//                contentColor = MaterialTheme.colorScheme.surfaceContainerHighest
+//            )
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
@@ -883,7 +841,7 @@ fun RecentPlayer(
         modifier = modifier.wrapContentSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        ElevatedCard(
+        Card(
             modifier = Modifier.height(height = 60.dp).fillMaxWidth(),
             shape = ContinuousCapsule,
             colors = CardDefaults.cardColors(
@@ -892,7 +850,8 @@ fun RecentPlayer(
             onClick = animateToFlutter,
         ) {
             Box(
-                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
             ) {
                 Row(
                     modifier = Modifier.wrapContentSize(),
@@ -1035,11 +994,7 @@ fun AppItem(
                 modifier = when (style) {
                     AppItemStyle.Image -> Modifier
                         .fillMaxSize()
-                        .clip(
-                            shape = RoundedCornerShape(
-                                size = 35.dp,
-                            ),
-                        )
+                        .clip(shape = RoundedCornerShape(size = 35.dp))
 
                     AppItemStyle.Icon -> Modifier.size(
                         size = 30.dp,

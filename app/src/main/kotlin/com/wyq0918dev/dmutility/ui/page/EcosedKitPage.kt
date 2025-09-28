@@ -1,6 +1,5 @@
 package com.wyq0918dev.dmutility.ui.page
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -14,7 +13,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -58,7 +56,8 @@ fun EcosedKitPage(
                     onClick = animateToDashboard,
                 ) {
                     Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = null,
                     )
                 }
             },

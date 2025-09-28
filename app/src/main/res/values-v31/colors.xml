@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_freefeos_background">@android:color/system_accent1_0</color>
-    <color name="ic_freefeos_foreground">@android:color/system_accent1_600</color>
+    <color name="ic_freefeos_foreground">@android:color/system_accent1_0</color>
+    <color name="ic_freefeos_background">@android:color/system_accent1_600</color>
     <color name="ic_ecosedkit_foreground">@android:color/system_accent1_0</color>
     <color name="ic_ecosedkit_background">@android:color/system_accent1_600</color>
     <color name="ic_ebkit_foreground">@android:color/system_accent1_0</color>
