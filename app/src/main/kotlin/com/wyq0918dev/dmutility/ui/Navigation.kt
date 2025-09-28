@@ -16,7 +16,7 @@ data object DashboardPage
 data object EcosedKitPage
 
 data class AppDestination<T>(
-    val label: String,
+    val label: String = "",
     val route: T,
     val icon: ImageVector,
     val selectedIcon: ImageVector,
@@ -24,22 +24,20 @@ data class AppDestination<T>(
 
 val appDestination: ArrayList<AppDestination<out Any>> = arrayListOf(
     AppDestination(
-        label = "",
         route = DashboardPage,
         icon = Icons.Outlined.Dashboard,
         selectedIcon = Icons.Filled.Dashboard,
     ),
     AppDestination(
-        label = "",
         route = EcosedKitPage,
         icon = Icons.Outlined.KeyboardCommandKey,
         selectedIcon = Icons.Filled.KeyboardCommandKey,
     ),
 )
 
-fun <T : Any> PagerState.isCurrentDestination(page: T): Boolean {
+fun <T : Any> PagerState.isCurrentDestination(route: T): Boolean {
     return this@isCurrentDestination.currentPage == appDestination.indexOfFirst { index ->
-        return@indexOfFirst index.route == page
+        return@indexOfFirst index.route == route
     }
 }
 

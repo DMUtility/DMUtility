@@ -113,10 +113,10 @@ fun DMUtilityTheme(
     )
 }
 
-@Composable
-fun TrebleTheme(content: @Composable () -> Unit,) {
-    DMUtilityTheme(
-        darkTheme = true,
-        content = content,
-    )
-}
+//@Composable
+//fun TrebleTheme(content: @Composable () -> Unit,) {
+//    DMUtilityTheme(
+//        darkTheme = true,
+//        content = content,
+//    )
+//}

@@ -12,6 +12,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,7 +27,6 @@ import com.kyant.capsule.ContinuousRoundedRectangle
 import com.wyq0918dev.dmutility.R
 import com.wyq0918dev.dmutility.hybrid.FlutterView
 import com.wyq0918dev.dmutility.ui.ULActionBar
-import com.wyq0918dev.dmutility.ui.theme.AppBackground
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 import com.wyq0918dev.dmutility.ui.utils.NoOnClick
 
@@ -63,7 +63,7 @@ fun EcosedKitPage(
                 }
             },
         )
-        Surface(
+        OutlinedCard(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
@@ -107,10 +107,6 @@ fun EcosedKitPage(
 @Composable
 fun EcosedKitPagePreview() {
     DMUtilityTheme {
-        EcosedKitPage(
-            modifier = Modifier.background(
-                color = AppBackground
-            )
-        )
+        EcosedKitPage()
     }
 }

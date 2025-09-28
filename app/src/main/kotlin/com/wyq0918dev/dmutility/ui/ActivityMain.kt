@@ -49,7 +49,9 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.twotone.Home
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
@@ -106,14 +108,11 @@ import com.kyant.capsule.ContinuousCapsule
 import com.kyant.capsule.ContinuousRoundedRectangle
 import com.wyq0918dev.dmutility.R
 import com.wyq0918dev.dmutility.ui.page.EcosedKitPage
-import com.wyq0918dev.dmutility.ui.theme.AndroidGreen
-import com.wyq0918dev.dmutility.ui.theme.AppBackground
 import com.wyq0918dev.dmutility.ui.theme.CapsuleEdgePadding
 import com.wyq0918dev.dmutility.ui.theme.CapsuleHeight
 import com.wyq0918dev.dmutility.ui.theme.CapsuleIndent
 import com.wyq0918dev.dmutility.ui.theme.CapsuleWidth
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
-import com.wyq0918dev.dmutility.ui.theme.TrebleTheme
 import com.wyq0918dev.dmutility.ui.utils.NoOnClick
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -224,9 +223,7 @@ fun ActivityMain() {
                 }
             }
             composable<Settings> {
-                TrebleTheme {
-                    UnderLayer()
-                }
+                UnderLayer()
             }
             composable<Installer> {
             }
@@ -348,8 +345,8 @@ fun UnderLayer(modifier: Modifier = Modifier) {
 //                )
 //            }
 //        },
-        floatingActionButtonPosition = FabPosition.End,
-        containerColor = AppBackground,
+//        floatingActionButtonPosition = FabPosition.End,
+//        containerColor = AppBackground,
     ) { innerPadding ->
         HorizontalPager(
             state = pageState,
@@ -424,7 +421,7 @@ fun NavBlock(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             appDestination.forEach { page ->
-                val isCurrent = pageState?.isCurrentDestination(page = page.route)
+                val isCurrent = pageState?.isCurrentDestination(route = page.route)
                 IconButton(
                     onClick = {
                         if (isCurrent == false) coroutineScope.launch {
@@ -506,12 +503,14 @@ fun ULActionBar(
     title: @Composable () -> Unit = {},
     navigationIcon: @Composable () -> Unit = {},
 ) {
-    Surface(
+    ElevatedCard (
         modifier = modifier
             .fillMaxWidth()
             .height(height = 56.dp),
         shape = ContinuousRoundedRectangle(size = 16.dp),
-        color = MaterialTheme.colorScheme.primaryContainer,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+        ),
     ) {
         TopAppBar(
             title = title,
@@ -552,7 +551,7 @@ fun ULTopBar(
             title = {
                 Text(
                     text = "Treble",
-                    color = Color.White,
+//                    color = Color.White,
                 )
             },
             navigationIcon = {
@@ -562,7 +561,7 @@ fun ULTopBar(
                         .width(width = CapsuleWidth)
                         .height(height = CapsuleHeight)
                         .clip(shape = ContinuousCapsule)
-                        .background(color = Color(color = 0xff434056))
+                        .background(color = MaterialTheme.colorScheme.surfaceContainerHighest)
                         .clickable(onClick = {}),
                     contentAlignment = Alignment.Center,
                 ) {
@@ -574,7 +573,7 @@ fun ULTopBar(
                             imageVector = Icons.Filled.Search,
                             contentDescription = null,
                             modifier = Modifier.size(size = 20.dp),
-                            tint = Color(color = 0xff8E8E9E)
+//                            tint = Color(color = 0xff8E8E9E)
                         )
                         Text(
                             text = "搜索",
@@ -582,7 +581,7 @@ fun ULTopBar(
                                 .wrapContentSize()
                                 .padding(start = 6.dp),
                             fontSize = 13.sp,
-                            color = Color(color = 0xff8E8E9E),
+//                            color = Color(color = 0xff8E8E9E),
                             textAlign = TextAlign.Center,
                         )
                     }
@@ -595,7 +594,7 @@ fun ULTopBar(
                         .height(height = CapsuleHeight)
                         .width(width = CapsuleWidth)
                         .clip(shape = ContinuousCapsule)
-                        .background(color = Color(color = 0xff434056)),
+                        .background(color = MaterialTheme.colorScheme.surfaceContainerHighest),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Box(
@@ -608,7 +607,7 @@ fun ULTopBar(
                         Icon(
                             imageVector = Icons.Filled.MoreHoriz,
                             contentDescription = null,
-                            tint = Color(color = 0xff8E8E9E),
+//                            tint = Color(color = 0xff8E8E9E),
                         )
                     }
                     VerticalDivider(
@@ -616,7 +615,7 @@ fun ULTopBar(
                             .padding(vertical = CapsuleIndent)
                             .wrapContentWidth()
                             .fillMaxHeight(),
-                        color = Color(color = 0xff8E8E9E),
+//                        color = Color(color = 0xff8E8E9E),
                     )
                     Box(
                         modifier = Modifier
@@ -628,7 +627,7 @@ fun ULTopBar(
                         Icon(
                             imageVector = Icons.Filled.Close,
                             contentDescription = null,
-                            tint = Color(color = 0xff8E8E9E),
+//                            tint = Color(color = 0xff8E8E9E),
                         )
                     }
                 }
@@ -637,11 +636,11 @@ fun ULTopBar(
                 containerColor = Color.Transparent,
             ),
         )
-        HorizontalDivider(
-            modifier = Modifier.fillMaxWidth(), thickness = 0.5.dp, color = Color.Black.copy(
-                alpha = 0.2f
-            )
-        )
+//        HorizontalDivider(
+//            modifier = Modifier.fillMaxWidth(), thickness = 0.5.dp, color = Color.Black.copy(
+//                alpha = 0.2f
+//            )
+//        )
     }
 }
 
@@ -666,9 +665,9 @@ fun DashboardPage(
                 bottom = 15.dp,
             ),
             fontSize = 14.sp,
-            color = Color(
-                color = 0xFF8E8E9E,
-            ),
+//            color = Color(
+//                color = 0xFF8E8E9E,
+//            ),
         )
         MPPlayer(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp),
@@ -683,7 +682,7 @@ fun DashboardPage(
                     start = 16.dp, top = 15.dp, end = 16.dp, bottom = 15.dp
                 ),
             shape = ContinuousRoundedRectangle(size = 16.dp),
-            color = Color(color = 0xFF434056)
+            color = MaterialTheme.colorScheme.surfaceContainerHighest,
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
@@ -692,9 +691,9 @@ fun DashboardPage(
                     Text(
                         text = "互联互通",
                         fontSize = 14.sp,
-                        color = Color(
-                            color = 0xFF8E8E9E,
-                        ),
+//                        color = Color(
+//                            color = 0xFF8E8E9E,
+//                        ),
                     )
                 }
                 Row(
@@ -721,7 +720,7 @@ fun DashboardPage(
                         Text(
                             text = "app",
                             fontSize = 15.sp,
-                            color = Color.White,
+//                            color = Color.White,
                             textAlign = TextAlign.Center,
                         )
                     }
@@ -745,7 +744,7 @@ fun DashboardPage(
                         Text(
                             text = "app",
                             fontSize = 15.sp,
-                            color = Color.White,
+//                            color = Color.White,
                             textAlign = TextAlign.Center,
                         )
                     }
@@ -769,7 +768,7 @@ fun DashboardPage(
                         Text(
                             text = "app",
                             fontSize = 15.sp,
-                            color = Color.White,
+//                            color = Color.White,
                             textAlign = TextAlign.Center,
                         )
                     }
@@ -787,9 +786,9 @@ fun DashboardPage(
                 bottom = 15.dp,
             ),
             fontSize = 14.sp,
-            color = Color(
-                color = 0xFF8E8E9E,
-            ),
+//            color = Color(
+//                color = 0xFF8E8E9E,
+//            ),
         )
         AppsGrid(
             modifier = Modifier.padding(
@@ -806,11 +805,7 @@ fun DashboardPage(
 @Composable
 fun DashboardPagePreview() {
     DMUtilityTheme {
-        DashboardPage(
-            modifier = Modifier.background(
-                color = AppBackground
-            )
-        )
+        DashboardPage()
     }
 }
 
@@ -888,39 +883,44 @@ fun RecentPlayer(
         modifier = modifier.wrapContentSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box(
-            modifier = Modifier
-                .height(height = 60.dp)
-                .fillMaxWidth()
-                .clip(shape = ContinuousCapsule)
-                .background(Color(color = 0xFF434056))
-                .clickable(onClick = animateToFlutter), contentAlignment = Alignment.Center
+        ElevatedCard(
+            modifier = Modifier.height(height = 60.dp).fillMaxWidth(),
+            shape = ContinuousCapsule,
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+            ),
+            onClick = animateToFlutter,
         ) {
-            Row(
-                modifier = Modifier.wrapContentSize(),
-                verticalAlignment = Alignment.CenterVertically,
+            Box(
+                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = Icons.Filled.FlutterDash,
-                    contentDescription = null,
-                    modifier = Modifier.size(size = 30.dp),
-                    tint = Color(color = 0xFF8E8E9E)
-                )
-                Text(
-                    text = "暂无内容",
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .padding(start = 10.dp),
-                    fontSize = 16.sp,
-                    color = Color(color = 0xFF8E8E9E),
-                    textAlign = TextAlign.Center,
-                )
+                Row(
+                    modifier = Modifier.wrapContentSize(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.FlutterDash,
+                        contentDescription = null,
+                        modifier = Modifier.size(size = 30.dp),
+//                    tint = Color(color = 0xFF8E8E9E)
+                    )
+                    Text(
+                        text = "暂无内容",
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .padding(start = 10.dp),
+                        fontSize = 16.sp,
+//                    color = Color(color = 0xFF8E8E9E),
+                        textAlign = TextAlign.Center,
+                    )
+                }
             }
         }
+
         Text(
             text = "Ecosed",
             fontSize = 15.sp,
-            color = Color.White,
+//            color = Color.White,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
@@ -1024,7 +1024,7 @@ fun AppItem(
             modifier = Modifier
                 .size(size = 60.dp)
                 .clip(shape = RoundedCornerShape(size = 35.dp))
-                .background(color = Color(color = 0xff434056))
+                .background(color = MaterialTheme.colorScheme.surfaceContainerHighest)
                 .clickable(onClick = onLaunch),
             contentAlignment = Alignment.Center,
         ) {
@@ -1050,7 +1050,7 @@ fun AppItem(
         Text(
             text = appName,
             fontSize = 15.sp,
-            color = Color.White,
+//            color = Color.White,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
