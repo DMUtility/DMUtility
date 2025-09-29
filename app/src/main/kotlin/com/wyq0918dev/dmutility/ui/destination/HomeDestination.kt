@@ -52,8 +52,8 @@ data class CarouselItem(
 
 val items = arrayListOf(
     CarouselItem(image = R.drawable.victory),
-    CarouselItem(image = R.drawable.victory),
-    CarouselItem(image = R.drawable.victory),
+    CarouselItem(image = R.drawable.shandong),
+//    CarouselItem(image = R.drawable.victory),
 )
 
 @OptIn(ExperimentalMaterial3Api::class)

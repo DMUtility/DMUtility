@@ -193,7 +193,9 @@ fun DiscoverDestination(
         ) { page ->
             when (discoverDestination[page].route) {
                 DashboardDestination -> DashboardDestination(
-                    popBackStack = {},
+                    popBackStack = {
+                        navController?.popBackStack()
+                    },
                     animateToEcosed = {
                         coroutineScope.launch {
                             pageState.navigateToPagerRoute(

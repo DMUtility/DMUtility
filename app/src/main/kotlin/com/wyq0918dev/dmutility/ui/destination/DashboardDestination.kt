@@ -25,7 +25,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.FlutterDash
+import androidx.compose.material.icons.twotone.Category
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -40,6 +42,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -236,7 +239,7 @@ fun MPPlayer(
                         R.mipmap.ic_launcher,
                     ),
                 ),
-                appName = "TrebleKit",
+                appName = stringResource(id = R.string.app_name),
             )
             AppItem(
                 modifier = Modifier
@@ -299,12 +302,12 @@ fun RecentPlayer(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.FlutterDash,
+                        imageVector = Icons.TwoTone.Category,
                         contentDescription = null,
                         modifier = Modifier.size(size = 30.dp),
                     )
                     Text(
-                        text = "暂无内容",
+                        text = "啥也不是",
                         modifier = Modifier
                             .wrapContentSize()
                             .padding(start = 10.dp),
@@ -314,9 +317,8 @@ fun RecentPlayer(
                 }
             }
         }
-
         Text(
-            text = "Ecosed",
+            text = "TrebleKit",
             fontSize = 15.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()

@@ -13,7 +13,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,6 +25,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,34 +48,70 @@ fun EcosedKitDestination(
     modifier: Modifier = Modifier,
     animateToDashboard: () -> Unit = NoOnClick,
 ) {
-    val inspection: Boolean = LocalInspectionMode.current
-    val inspectionModeText: String = stringResource(
-        id = R.string.inspection_mode_text,
-    )
     Column(
         modifier = modifier.fillMaxSize(),
     ) {
-        TPActionBar(
-            modifier = Modifier.padding(
-                start = 16.dp,
-                top = 16.dp,
-                end = 16.dp,
-                bottom = 8.dp,
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 16.dp,
+                    top = 16.dp,
+                    end = 16.dp,
+                    bottom = 8.dp,
+                )
+                .height(height = 56.dp),
+            shape = ContinuousRoundedRectangle(size = 16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
             ),
-            title = {
-                Text(text = stringResource(R.string.destination_ecosedkit))
-            },
-            navigationIcon = {
-                IconButton(
-                    onClick = animateToDashboard,
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = null,
-                    )
-                }
-            },
-        )
+        ) {
+            TopAppBar(
+                title = {
+//                    Text(text = stringResource(id = R.string.destination_ecosedkit))
+                    Text(text = "TreblePlatform")
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                navigationIcon = {
+                    IconButton(
+                        onClick = animateToDashboard,
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null,
+                        )
+                    }
+                },
+                actions = {
+                    var expanded by remember { mutableStateOf(value = false) }
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Option 1") },
+                            onClick = { expanded = false }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Option 2") },
+                            onClick = { expanded = false }
+                        )
+                    }
+                    IconButton(onClick = { expanded = true }) {
+                        Icon(
+                            imageVector = Icons.Filled.MoreVert,
+                            contentDescription = null,
+                        )
+                    }
+                },
+                windowInsets = WindowInsets(),
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent,
+                ),
+            )
+        }
         OutlinedCard(
             modifier = Modifier
                 .fillMaxSize()
@@ -82,20 +123,18 @@ fun EcosedKitDestination(
                 ),
             shape = ContinuousRoundedRectangle(size = 16.dp),
         ) {
-            if (!inspection) {
-                FlutterView(
+            when {
+                LocalInspectionMode.current -> Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                )
-            } else {
-                Scaffold(
-                    contentWindowInsets = WindowInsets(),
                     topBar = {
-                        CenterAlignedTopAppBar(
+                        TopAppBar(
                             title = {
-                                Text("EcosedKit")
+                                Text(text = "EcosedKit")
                             },
+                            windowInsets = WindowInsets()
                         )
                     },
+                    contentWindowInsets = WindowInsets(),
                 ) { innerPadding ->
                     Box(
                         modifier = Modifier
@@ -103,9 +142,13 @@ fun EcosedKitDestination(
                             .padding(paddingValues = innerPadding),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Text(text = inspectionModeText)
+                        Text(text = stringResource(id = R.string.inspection_mode_text))
                     }
                 }
+
+                else -> FlutterView(
+                    modifier = Modifier.fillMaxSize(),
+                )
             }
         }
     }
@@ -116,43 +159,5 @@ fun EcosedKitDestination(
 fun EcosedKitDestinationPreview() {
     DMUtilityTheme {
         EcosedKitDestination()
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TPActionBar(
-    modifier: Modifier = Modifier,
-    title: @Composable () -> Unit = {},
-    navigationIcon: @Composable () -> Unit = {},
-) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(height = 56.dp),
-        shape = ContinuousRoundedRectangle(size = 16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-        ),
-    ) {
-        TopAppBar(
-            title = title,
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            navigationIcon = navigationIcon,
-            actions = {
-                IconButton(onClick = NoOnClick) {
-                    Icon(
-                        imageVector = Icons.Filled.MoreVert,
-                        contentDescription = null,
-                    )
-                }
-            },
-            windowInsets = WindowInsets(),
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = Color.Transparent,
-            ),
-        )
     }
 }

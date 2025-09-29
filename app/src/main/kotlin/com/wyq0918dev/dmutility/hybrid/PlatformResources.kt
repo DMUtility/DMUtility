@@ -42,8 +42,8 @@ class PlatformResources : FlutterPlugin, MethodChannel.MethodCallHandler {
                     if (isDrawable) "drawable" else "mipmap",
                     mContext.packageName,
                 )
-                val drawable: Drawable? = ContextCompat.getDrawable(mContext, id!!)
-                val byteArray = drawableToByteArray(drawable)
+
+                val byteArray = drawableToByteArray(id!!)
                 result.success(byteArray)
             }
 
@@ -54,7 +54,8 @@ class PlatformResources : FlutterPlugin, MethodChannel.MethodCallHandler {
     /**
      * 绘制Drawable为PNG格式二进制数据
      */
-    private fun drawableToByteArray(drawable: Drawable?): ByteArray {
+    private fun drawableToByteArray(id: Int): ByteArray {
+        val drawable: Drawable? = ContextCompat.getDrawable(mContext, id)
         if (drawable != null) {
             val bitmap = createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight)
             val canvas = Canvas(bitmap)
