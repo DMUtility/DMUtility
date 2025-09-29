@@ -34,7 +34,7 @@ data object EcosedKitPage
 data object SettingsDestination
 
 data class AppDestination<T>(
-    val label: String = "",
+    val label: String,
     val route: T,
     val icon: ImageVector,
     val selectedIcon: ImageVector,
@@ -69,11 +69,13 @@ val appDestination = arrayListOf(
 
 val discoverDestination: ArrayList<AppDestination<out Any>> = arrayListOf(
     AppDestination(
+        label = "Dashboard",
         route = DashboardPage,
         icon = Icons.Outlined.Dashboard,
         selectedIcon = Icons.Filled.Dashboard,
     ),
     AppDestination(
+        label = "EcosedKit",
         route = EcosedKitPage,
         icon = Icons.Outlined.KeyboardCommandKey,
         selectedIcon = Icons.Filled.KeyboardCommandKey,

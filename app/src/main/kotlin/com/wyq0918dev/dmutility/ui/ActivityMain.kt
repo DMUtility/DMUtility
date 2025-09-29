@@ -1,6 +1,9 @@
 package com.wyq0918dev.dmutility.ui
 
 import android.content.Context
+import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
+import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -53,6 +56,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -64,6 +70,7 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -82,9 +89,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -177,18 +186,15 @@ fun ActivityMain() {
                         TopAppBar(
                             title = {
                                 Text(stringResource(R.string.app_name))
-                            }
-                        )
-                    }
-                ) { innerPadding ->
+                            })
+                    }) { innerPadding ->
                     Column(
-                        modifier = Modifier.fillMaxSize().padding(paddingValues = innerPadding)
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues = innerPadding)
                     ) {
-                        CarouselExample_MultiBrowse()
+                        BannerCarousel() // 500x300px
                     }
-//                    Box(modifier = Modifier.fillMaxSize().padding(innerPadding), contentAlignment = Alignment.Center) {
-//                        Text("Hello World")
-//                    }
                 }
             }
             composable<ToolsDestination> {
@@ -197,19 +203,19 @@ fun ActivityMain() {
                         TopAppBar(
                             title = {
                                 Text(text = "Tools")
-                            }
-                        )
-                    }
-                ) { innerPadding ->
+                            })
+                    }) { innerPadding ->
                     Column(
-                        modifier = Modifier.fillMaxSize().padding(paddingValues = innerPadding)
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues = innerPadding)
                     ) {
 
                     }
                 }
             }
             composable<DiscoverDestination> {
-                UnderLayer()
+                UnderLayer(navController = navController)
             }
             composable<SettingsDestination> {
                 Scaffold(
@@ -217,12 +223,12 @@ fun ActivityMain() {
                         TopAppBar(
                             title = {
                                 Text(text = "Settings")
-                            }
-                        )
-                    }
-                ) { innerPadding ->
+                            })
+                    }) { innerPadding ->
                     Column(
-                        modifier = Modifier.fillMaxSize().padding(paddingValues = innerPadding)
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues = innerPadding)
                     ) {
 
                     }
@@ -231,7 +237,6 @@ fun ActivityMain() {
 
         }
     }
-
 
 
 }
@@ -245,63 +250,58 @@ private fun ActivityMainPreview() {
 }
 
 data class CarouselItem(
-    val id: Int,
-    val imageResId: Int,
-    val contentDescription: String
+    val image: Int,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CarouselExample_MultiBrowse() {
-
+fun BannerCarousel() {
 
     val items = remember {
         listOf(
-            CarouselItem(0, R.mipmap.ic_launcher, "ic_launcher"),
-            CarouselItem(1, R.mipmap.ic_freefeos, "ic_freefeos"),
-            CarouselItem(2, R.mipmap.ic_ecosedkit, "ic_ecosedkit"),
-            CarouselItem(3, R.mipmap.ic_ebkit, "ic_ebkit"),
+            CarouselItem(image = R.drawable.victory),
+            CarouselItem(image = R.drawable.victory),
+            CarouselItem(image = R.drawable.victory),
         )
     }
 
     val state = rememberCarouselState { items.count() }
-    val context = LocalContext.current
+
 
     HorizontalMultiBrowseCarousel(
         state = state,
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(top = 16.dp, bottom = 16.dp),
-        preferredItemWidth = 186.dp,
+            .padding(top = 16.dp, bottom = 8.dp),
+        preferredItemWidth = 500.dp,
         itemSpacing = 8.dp,
         contentPadding = PaddingValues(horizontal = 16.dp)
-    ) { i ->
-        val item = items[i]
+    ) { item ->
         Image(
             modifier = Modifier
-                .height(height = 205.dp)
+                .height(height = 200.dp)
                 .maskClip(shape = MaterialTheme.shapes.extraLarge),
-            painter = rememberDrawablePainter(ContextCompat.getDrawable(context, item.imageResId)),
-            contentDescription = item.contentDescription,
+            painter = painterResource(id = items[item].image),
+            contentDescription = null,
             contentScale = ContentScale.Crop
         )
     }
 }
 
 
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UnderLayer(modifier: Modifier = Modifier) {
+fun UnderLayer(
+    modifier: Modifier = Modifier,
+    navController: NavHostController? = null,
+) {
     val coroutineScope = rememberCoroutineScope()
     val pageState = rememberPagerState { discoverDestination.size }
-
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            ULTopBar()
+            ULTopBar(pageState = pageState)
         },
     ) { innerPadding ->
         HorizontalPager(
@@ -426,8 +426,8 @@ fun HomeFAB(
 ) {
     ExtendedFloatingActionButton(
         text = {
-            Text(text = "返回")
-        },
+        Text(text = "返回")
+    },
         icon = {
             Icon(
                 imageVector = Icons.TwoTone.Home,
@@ -435,9 +435,7 @@ fun HomeFAB(
             )
         },
         onClick = popBackStack,
-        modifier = modifier
-            .wrapContentSize()
-            ,
+        modifier = modifier.wrapContentSize(),
         shape = ContinuousRoundedRectangle(size = 16.dp),
         elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
     )
@@ -494,7 +492,9 @@ fun ULActionBar(
 @Composable
 fun ULTopBar(
     modifier: Modifier = Modifier,
+    pageState: PagerState? = null,
 ) {
+    val coroutineScope = rememberCoroutineScope()
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -505,10 +505,7 @@ fun ULTopBar(
                 .fillMaxWidth()
                 .wrapContentHeight(),
             title = {
-                Text(
-                    text = "Treble",
-//                    color = Color.White,
-                )
+                Text(text = "Discover")
             },
             navigationIcon = {
                 Box(
@@ -529,7 +526,6 @@ fun ULTopBar(
                             imageVector = Icons.Filled.Search,
                             contentDescription = null,
                             modifier = Modifier.size(size = 20.dp),
-//                            tint = Color(color = 0xff8E8E9E)
                         )
                         Text(
                             text = "搜索",
@@ -537,7 +533,6 @@ fun ULTopBar(
                                 .wrapContentSize()
                                 .padding(start = 6.dp),
                             fontSize = 13.sp,
-//                            color = Color(color = 0xff8E8E9E),
                             textAlign = TextAlign.Center,
                         )
                     }
@@ -563,7 +558,6 @@ fun ULTopBar(
                         Icon(
                             imageVector = Icons.Filled.MoreHoriz,
                             contentDescription = null,
-//                            tint = Color(color = 0xff8E8E9E),
                         )
                     }
                     VerticalDivider(
@@ -571,7 +565,6 @@ fun ULTopBar(
                             .padding(vertical = CapsuleIndent)
                             .wrapContentWidth()
                             .fillMaxHeight(),
-//                        color = Color(color = 0xff8E8E9E),
                     )
                     Box(
                         modifier = Modifier
@@ -583,7 +576,6 @@ fun ULTopBar(
                         Icon(
                             imageVector = Icons.Filled.Close,
                             contentDescription = null,
-//                            tint = Color(color = 0xff8E8E9E),
                         )
                     }
                 }
@@ -592,11 +584,38 @@ fun ULTopBar(
                 containerColor = Color.Transparent,
             ),
         )
-//        HorizontalDivider(
-//            modifier = Modifier.fillMaxWidth(), thickness = 0.5.dp, color = Color.Black.copy(
-//                alpha = 0.2f
-//            )
-//        )
+        TabRow(
+            selectedTabIndex = pageState?.currentPage ?: 0,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+        ) {
+            discoverDestination.forEach { page ->
+                val isCurrent = pageState?.isCurrentDestination(route = page.route)
+                Tab(
+                    selected = isCurrent ?: false,
+                    onClick = {
+                        if (isCurrent == false) coroutineScope.launch {
+                            pageState.animateToRoute(route = page.route)
+                        }
+                    },
+                    text = {
+                        Text(text = page.label)
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = if (isCurrent == true) {
+                                page.selectedIcon
+                            } else {
+                                page.icon
+                            },
+                            contentDescription = null,
+                            modifier = Modifier.wrapContentSize(),
+                        )
+                    },
+                )
+            }
+        }
     }
 }
 
@@ -842,7 +861,9 @@ fun RecentPlayer(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Card(
-            modifier = Modifier.height(height = 60.dp).fillMaxWidth(),
+            modifier = Modifier
+                .height(height = 60.dp)
+                .fillMaxWidth(),
             shape = ContinuousCapsule,
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -877,11 +898,9 @@ fun RecentPlayer(
         }
 
         Text(
-            text = "Ecosed",
-            fontSize = 15.sp,
+            text = "Ecosed", fontSize = 15.sp,
 //            color = Color.White,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
+            textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -1003,11 +1022,9 @@ fun AppItem(
             )
         }
         Text(
-            text = appName,
-            fontSize = 15.sp,
+            text = appName, fontSize = 15.sp,
 //            color = Color.White,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
+            textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()
         )
     }
 }

@@ -39,18 +39,26 @@ class DMUtilityApp extends StatelessWidget {
 
   final MaterialTheme theme = const MaterialTheme();
 
-  ThemeData getTheme(ThemeData origin) {
+  Brightness getSystemBarBrightness(BuildContext context) {
+    if (MediaQuery.platformBrightnessOf(context) == Brightness.light) {
+      return Brightness.dark;
+    } else {
+      return Brightness.light;
+    }
+  }
+
+  ThemeData getTheme(BuildContext context, ThemeData origin) {
     return origin.copyWith(
       appBarTheme: AppBarTheme(
         centerTitle: true,
         systemOverlayStyle: SystemUiOverlayStyle(
-          // systemNavigationBarColor: Colors.transparent,
-          // systemNavigationBarDividerColor: Colors.transparent,
-          // systemNavigationBarIconBrightness: Brightness.light,
+          systemNavigationBarColor: Colors.transparent,
+          systemNavigationBarDividerColor: Colors.transparent,
+          systemNavigationBarIconBrightness: getSystemBarBrightness(context),
           systemNavigationBarContrastEnforced: false,
-          // statusBarColor: Colors.transparent,
-          // statusBarBrightness: Brightness.light,
-          // statusBarIconBrightness: Brightness.light,
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: getSystemBarBrightness(context),
+          statusBarIconBrightness: getSystemBarBrightness(context),
           systemStatusBarContrastEnforced: false,
         ),
       ),
@@ -61,9 +69,8 @@ class DMUtilityApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TrebleKit',
-      theme: getTheme(theme.light()),
-      darkTheme: getTheme(theme.dark()),
-      // themeMode: ThemeMode.dark,
+      theme: getTheme(context, theme.light()),
+      darkTheme: getTheme(context, theme.dark()),
       builder: <TransitionBuilder>[FreeFEOS.builder].toBuilder,
       home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
