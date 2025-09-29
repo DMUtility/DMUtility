@@ -2,10 +2,13 @@
 <resources>
     <string name="app_name">树莓次元</string>
     <string name="inspection_mode_text">检查模式</string>
+
+
     <string name="destination_home">主页</string>
     <string name="destination_tools">工具</string>
     <string name="destination_discover">发现</string>
-    <string name="destination_settings">设置</string>
     <string name="destination_dashboard">仪表盘</string>
     <string name="destination_ecosedkit">EcosedKit</string>
+    <string name="destination_settings">设置</string>
+
 </resources>
