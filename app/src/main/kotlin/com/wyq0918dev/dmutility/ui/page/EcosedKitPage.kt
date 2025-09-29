@@ -49,7 +49,7 @@ fun EcosedKitPage(
                 bottom = 8.dp,
             ),
             title = {
-                Text(text = "EcosedKit")
+                Text(text = stringResource(R.string.destination_ecosedkit))
             },
             navigationIcon = {
                 IconButton(

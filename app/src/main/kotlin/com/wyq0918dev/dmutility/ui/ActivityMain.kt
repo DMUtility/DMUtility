@@ -146,12 +146,12 @@ fun ActivityMain() {
                             } else {
                                 destination.icon
                             },
-                            contentDescription = destination.label,
+                            contentDescription = stringResource(id = destination.label),
                         )
                     },
                     modifier = Modifier.wrapContentSize(),
                     label = {
-                        Text(text = destination.label)
+                        Text(text = stringResource(id = destination.label))
                     },
                     selected = isCurrent,
                     onClick = {
@@ -202,7 +202,7 @@ fun ActivityMain() {
                     topBar = {
                         TopAppBar(
                             title = {
-                                Text(text = "Tools")
+                                Text(text = stringResource(R.string.destination_tools))
                             })
                     }) { innerPadding ->
                     Column(
@@ -222,7 +222,7 @@ fun ActivityMain() {
                     topBar = {
                         TopAppBar(
                             title = {
-                                Text(text = "Settings")
+                                Text(text = stringResource(R.string.destination_settings))
                             })
                     }) { innerPadding ->
                     Column(
@@ -253,21 +253,16 @@ data class CarouselItem(
     val image: Int,
 )
 
+val items = arrayListOf(
+    CarouselItem(image = R.drawable.victory),
+    CarouselItem(image = R.drawable.victory),
+    CarouselItem(image = R.drawable.victory),
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BannerCarousel() {
-
-    val items = remember {
-        listOf(
-            CarouselItem(image = R.drawable.victory),
-            CarouselItem(image = R.drawable.victory),
-            CarouselItem(image = R.drawable.victory),
-        )
-    }
-
     val state = rememberCarouselState { items.count() }
-
-
     HorizontalMultiBrowseCarousel(
         state = state,
         modifier = Modifier
@@ -288,7 +283,6 @@ fun BannerCarousel() {
         )
     }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -426,8 +420,8 @@ fun HomeFAB(
 ) {
     ExtendedFloatingActionButton(
         text = {
-        Text(text = "返回")
-    },
+            Text(text = "返回")
+        },
         icon = {
             Icon(
                 imageVector = Icons.TwoTone.Home,
@@ -505,7 +499,7 @@ fun ULTopBar(
                 .fillMaxWidth()
                 .wrapContentHeight(),
             title = {
-                Text(text = "Discover")
+                Text(text = stringResource(R.string.destination_discover))
             },
             navigationIcon = {
                 Box(
@@ -590,28 +584,19 @@ fun ULTopBar(
                 .fillMaxWidth()
                 .wrapContentHeight(),
         ) {
-            discoverDestination.forEach { page ->
-                val isCurrent = pageState?.isCurrentDestination(route = page.route)
+            discoverDestination.forEach { destination ->
+                val isCurrent = pageState?.isCurrentDestination(
+                    route = destination.route,
+                )
                 Tab(
                     selected = isCurrent ?: false,
                     onClick = {
                         if (isCurrent == false) coroutineScope.launch {
-                            pageState.animateToRoute(route = page.route)
+                            pageState.animateToRoute(route = destination.route)
                         }
                     },
                     text = {
-                        Text(text = page.label)
-                    },
-                    icon = {
-                        Icon(
-                            imageVector = if (isCurrent == true) {
-                                page.selectedIcon
-                            } else {
-                                page.icon
-                            },
-                            contentDescription = null,
-                            modifier = Modifier.wrapContentSize(),
-                        )
+                        Text(text = stringResource(id = destination.label))
                     },
                 )
             }

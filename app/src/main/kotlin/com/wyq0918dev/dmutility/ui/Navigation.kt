@@ -13,6 +13,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.KeyboardCommandKey
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.wyq0918dev.dmutility.R
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -34,7 +35,7 @@ data object EcosedKitPage
 data object SettingsDestination
 
 data class AppDestination<T>(
-    val label: String,
+    val label: Int,
     val route: T,
     val icon: ImageVector,
     val selectedIcon: ImageVector,
@@ -42,25 +43,25 @@ data class AppDestination<T>(
 
 val appDestination = arrayListOf(
     AppDestination(
-        label = "Home",
+        label = R.string.destination_home,
         route = HomeDestination,
         icon = Icons.Outlined.Home,
         selectedIcon = Icons.Filled.Home,
     ),
     AppDestination(
-        label = "Tools",
+        label =R.string.destination_tools,
         route = ToolsDestination,
         icon = Icons.Outlined.AllInbox,
         selectedIcon = Icons.Filled.AllInbox,
     ),
     AppDestination(
-        label = "Discover",
+        label = R.string.destination_discover,
         route = DiscoverDestination,
         icon = Icons.Outlined.Dashboard,
         selectedIcon = Icons.Filled.Dashboard,
     ),
     AppDestination(
-        label = "Settings",
+        label = R.string.destination_settings,
         route = SettingsDestination,
         icon = Icons.Outlined.Settings,
         selectedIcon = Icons.Filled.Settings,
@@ -69,13 +70,13 @@ val appDestination = arrayListOf(
 
 val discoverDestination: ArrayList<AppDestination<out Any>> = arrayListOf(
     AppDestination(
-        label = "Dashboard",
+        label = R.string.destination_dashboard,
         route = DashboardPage,
         icon = Icons.Outlined.Dashboard,
         selectedIcon = Icons.Filled.Dashboard,
     ),
     AppDestination(
-        label = "EcosedKit",
+        label = R.string.destination_ecosedkit,
         route = EcosedKitPage,
         icon = Icons.Outlined.KeyboardCommandKey,
         selectedIcon = Icons.Filled.KeyboardCommandKey,
@@ -83,8 +84,10 @@ val discoverDestination: ArrayList<AppDestination<out Any>> = arrayListOf(
 )
 
 fun <T : Any> PagerState.isCurrentDestination(route: T): Boolean {
-    return this@isCurrentDestination.currentPage == discoverDestination.indexOfFirst { index ->
+    return discoverDestination.indexOfFirst { index ->
         return@indexOfFirst index.route == route
+    }.let { current ->
+        return@let this@isCurrentDestination.currentPage == current
     }
 }
 
