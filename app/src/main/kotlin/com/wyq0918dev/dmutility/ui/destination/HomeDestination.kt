@@ -46,20 +46,15 @@ fun HomeDestination(modifier: Modifier = Modifier) {
     }
 }
 
-data class CarouselItem(
-    val image: Int,
-)
-
-val items = arrayListOf(
-    CarouselItem(image = R.drawable.victory),
-    CarouselItem(image = R.drawable.shandong),
-//    CarouselItem(image = R.drawable.victory),
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BannerCarousel() {
-    val state = rememberCarouselState { items.count() }
+    val images = arrayListOf(
+        R.drawable.victory,
+        R.drawable.shandong,
+        R.drawable.victory,
+    )
+    val state = rememberCarouselState { images.count() }
     HorizontalMultiBrowseCarousel(
         state = state,
         modifier = Modifier
@@ -74,7 +69,7 @@ fun BannerCarousel() {
             modifier = Modifier
                 .height(height = 200.dp)
                 .maskClip(shape = MaterialTheme.shapes.extraLarge),
-            painter = painterResource(id = items[item].image),
+            painter = painterResource(id = images[item]),
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
