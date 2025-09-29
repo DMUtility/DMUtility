@@ -28,7 +28,7 @@ data object DiscoverDestination
 data object DashboardDestination
 
 @Serializable
-data object EcosedKitDestination
+data object TrebleKitDestination
 
 @Serializable
 data object SettingsDestination
@@ -75,8 +75,8 @@ val discoverDestination: ArrayList<AppDestination<out Any>> = arrayListOf(
         selectedIcon = Icons.Filled.Dashboard,
     ),
     AppDestination(
-        label = R.string.destination_ecosedkit,
-        route = EcosedKitDestination,
+        label = R.string.destination_treblekit,
+        route = TrebleKitDestination,
         icon = Icons.Outlined.KeyboardCommandKey,
         selectedIcon = Icons.Filled.KeyboardCommandKey,
     ),

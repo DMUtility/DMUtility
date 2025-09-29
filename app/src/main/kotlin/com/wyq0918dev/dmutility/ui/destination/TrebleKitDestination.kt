@@ -44,7 +44,7 @@ import com.wyq0918dev.dmutility.ui.utils.NoOnClick
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EcosedKitDestination(
+fun TrebleKitDestination(
     modifier: Modifier = Modifier,
     animateToDashboard: () -> Unit = NoOnClick,
 ) {
@@ -68,8 +68,7 @@ fun EcosedKitDestination(
         ) {
             TopAppBar(
                 title = {
-//                    Text(text = stringResource(id = R.string.destination_ecosedkit))
-                    Text(text = "TreblePlatform")
+                    Text(text = stringResource(id = R.string.treblekit_actionbar_title))
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -156,8 +155,8 @@ fun EcosedKitDestination(
 
 @Preview(showBackground = true)
 @Composable
-fun EcosedKitDestinationPreview() {
+fun TrebleKitDestinationPreview() {
     DMUtilityTheme {
-        EcosedKitDestination()
+        TrebleKitDestination()
     }
 }

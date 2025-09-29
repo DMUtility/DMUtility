@@ -46,7 +46,8 @@ import androidx.navigation.NavHostController
 import com.kyant.capsule.ContinuousCapsule
 import com.wyq0918dev.dmutility.R
 import com.wyq0918dev.dmutility.ui.navigation.DashboardDestination
-import com.wyq0918dev.dmutility.ui.navigation.EcosedKitDestination
+import com.wyq0918dev.dmutility.ui.navigation.HomeDestination
+import com.wyq0918dev.dmutility.ui.navigation.TrebleKitDestination
 import com.wyq0918dev.dmutility.ui.navigation.discoverDestination
 import com.wyq0918dev.dmutility.ui.theme.CapsuleEdgePadding
 import com.wyq0918dev.dmutility.ui.theme.CapsuleHeight
@@ -56,6 +57,7 @@ import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 import com.wyq0918dev.dmutility.ui.utils.NoOnClick
 import com.wyq0918dev.dmutility.ui.utils.navigateToPagerRoute
 import com.wyq0918dev.dmutility.ui.utils.isCurrentPagerDestination
+import com.wyq0918dev.dmutility.ui.utils.navigateToNavRoute
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -194,18 +196,20 @@ fun DiscoverDestination(
             when (discoverDestination[page].route) {
                 DashboardDestination -> DashboardDestination(
                     popBackStack = {
-                        navController?.popBackStack()
+                        navController.navigateToNavRoute(
+                            route = HomeDestination,
+                        )
                     },
-                    animateToEcosed = {
+                    animateToTreble = {
                         coroutineScope.launch {
                             pageState.navigateToPagerRoute(
-                                route = EcosedKitDestination
+                                route = TrebleKitDestination
                             )
                         }
                     },
                 )
 
-                EcosedKitDestination -> EcosedKitDestination(
+                TrebleKitDestination -> TrebleKitDestination(
                     animateToDashboard = {
                         coroutineScope.launch {
                             pageState.navigateToPagerRoute(

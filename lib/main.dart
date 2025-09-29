@@ -50,7 +50,6 @@ class DMUtilityApp extends StatelessWidget {
   ThemeData getTheme(BuildContext context, ThemeData origin) {
     return origin.copyWith(
       appBarTheme: AppBarTheme(
-        centerTitle: true,
         systemOverlayStyle: SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.transparent,
           systemNavigationBarDividerColor: Colors.transparent,

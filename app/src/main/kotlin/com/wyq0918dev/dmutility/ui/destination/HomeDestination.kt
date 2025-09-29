@@ -66,11 +66,11 @@ fun BannerCarousel() {
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) { item ->
         Image(
+            painter = painterResource(id = images[item]),
+            contentDescription = null,
             modifier = Modifier
                 .height(height = 200.dp)
                 .maskClip(shape = MaterialTheme.shapes.extraLarge),
-            painter = painterResource(id = images[item]),
-            contentDescription = null,
             contentScale = ContentScale.Crop
         )
     }

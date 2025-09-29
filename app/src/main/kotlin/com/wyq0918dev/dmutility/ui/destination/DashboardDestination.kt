@@ -25,8 +25,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Category
-import androidx.compose.material.icons.filled.FlutterDash
 import androidx.compose.material.icons.twotone.Category
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -60,7 +58,7 @@ import com.wyq0918dev.dmutility.ui.utils.NoOnClick
 fun DashboardDestination(
     modifier: Modifier = Modifier,
     popBackStack: () -> Unit = NoOnClick,
-    animateToEcosed: () -> Unit = NoOnClick,
+    animateToTreble: () -> Unit = NoOnClick,
 ) {
     val scrollState = rememberScrollState()
     Column(
@@ -81,7 +79,7 @@ fun DashboardDestination(
         MPPlayer(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp),
             popBackStack = popBackStack,
-            animateToFlutter = animateToEcosed,
+            animateToTreble = animateToTreble,
         )
         Card(
             modifier = Modifier
@@ -214,7 +212,7 @@ fun DashboardDestinationPreview() {
 fun MPPlayer(
     modifier: Modifier = Modifier,
     popBackStack: () -> Unit = NoOnClick,
-    animateToFlutter: () -> Unit = NoOnClick,
+    animateToTreble: () -> Unit = NoOnClick,
 ) {
     val context: Context = LocalContext.current
     Row(
@@ -261,7 +259,7 @@ fun MPPlayer(
                 .weight(weight = 1f)
                 .padding(start = 16.dp)
                 .fillMaxSize(),
-            animateToFlutter = animateToFlutter,
+            animateToTreble = animateToTreble,
         )
     }
 }
@@ -277,7 +275,7 @@ fun MPPlayerPreview() {
 @Composable
 fun RecentPlayer(
     modifier: Modifier = Modifier,
-    animateToFlutter: () -> Unit = NoOnClick,
+    animateToTreble: () -> Unit = NoOnClick,
 ) {
     Column(
         modifier = modifier.wrapContentSize(),
@@ -291,7 +289,7 @@ fun RecentPlayer(
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
             ),
-            onClick = animateToFlutter,
+            onClick = animateToTreble,
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -307,7 +305,7 @@ fun RecentPlayer(
                         modifier = Modifier.size(size = 30.dp),
                     )
                     Text(
-                        text = "啥也不是",
+                        text = "软件平台",
                         modifier = Modifier
                             .wrapContentSize()
                             .padding(start = 10.dp),

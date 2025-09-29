@@ -8,8 +8,9 @@
     <string name="destination_tools">工具</string>
     <string name="destination_discover">发现</string>
     <string name="destination_dashboard">仪表盘</string>
-    <string name="destination_ecosedkit">EcosedKit</string>
+    <string name="destination_treblekit">TrebleKit</string>
     <string name="destination_settings">设置</string>
     <string name="discover_topbar_search">搜索</string>
+    <string name="treblekit_actionbar_title">Treble平台</string>
 
 </resources>
