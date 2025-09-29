@@ -1,6 +1,5 @@
-package com.wyq0918dev.dmutility.ui
+package com.wyq0918dev.dmutility.ui.navigation
 
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AllInbox
 import androidx.compose.material.icons.filled.Dashboard
@@ -26,10 +25,10 @@ data object ToolsDestination
 data object DiscoverDestination
 
 @Serializable
-data object DashboardPage
+data object DashboardDestination
 
 @Serializable
-data object EcosedKitPage
+data object EcosedKitDestination
 
 @Serializable
 data object SettingsDestination
@@ -49,7 +48,7 @@ val appDestination = arrayListOf(
         selectedIcon = Icons.Filled.Home,
     ),
     AppDestination(
-        label =R.string.destination_tools,
+        label = R.string.destination_tools,
         route = ToolsDestination,
         icon = Icons.Outlined.AllInbox,
         selectedIcon = Icons.Filled.AllInbox,
@@ -71,30 +70,14 @@ val appDestination = arrayListOf(
 val discoverDestination: ArrayList<AppDestination<out Any>> = arrayListOf(
     AppDestination(
         label = R.string.destination_dashboard,
-        route = DashboardPage,
+        route = DashboardDestination,
         icon = Icons.Outlined.Dashboard,
         selectedIcon = Icons.Filled.Dashboard,
     ),
     AppDestination(
         label = R.string.destination_ecosedkit,
-        route = EcosedKitPage,
+        route = EcosedKitDestination,
         icon = Icons.Outlined.KeyboardCommandKey,
         selectedIcon = Icons.Filled.KeyboardCommandKey,
     ),
 )
-
-fun <T : Any> PagerState.isCurrentDestination(route: T): Boolean {
-    return discoverDestination.indexOfFirst { index ->
-        return@indexOfFirst index.route == route
-    }.let { current ->
-        return@let this@isCurrentDestination.currentPage == current
-    }
-}
-
-suspend fun <T : Any> PagerState.animateToRoute(route: T) {
-    return this@animateToRoute.animateScrollToPage(
-        page = discoverDestination.indexOfFirst { index ->
-            return@indexOfFirst index.route == route
-        },
-    )
-}

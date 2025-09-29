@@ -10,5 +10,6 @@
     <string name="destination_dashboard">仪表盘</string>
     <string name="destination_ecosedkit">EcosedKit</string>
     <string name="destination_settings">设置</string>
+    <string name="discover_topbar_search">搜索</string>
 
 </resources>
