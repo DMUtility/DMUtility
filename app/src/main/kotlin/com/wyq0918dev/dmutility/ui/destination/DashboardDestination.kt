@@ -248,7 +248,7 @@ fun MPPlayer(
                 appIcon = rememberDrawablePainter(
                     drawable = AppCompatResources.getDrawable(
                         context,
-                        R.mipmap.ic_ebkit,
+                        R.drawable.ic_ebkit,
                     ),
                 ),
                 appName = "EbKit",
