@@ -36,6 +36,7 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.kyant.capsule.ContinuousRoundedRectangle
 import com.wyq0918dev.dmutility.R
 import com.wyq0918dev.dmutility.hybrid.FlutterView
@@ -46,6 +47,7 @@ import com.wyq0918dev.dmutility.ui.utils.NoOnClick
 @Composable
 fun TrebleKitDestination(
     modifier: Modifier = Modifier,
+    navController: NavHostController? = null,
     animateToDashboard: () -> Unit = NoOnClick,
 ) {
     Column(
@@ -90,8 +92,11 @@ fun TrebleKitDestination(
                         onDismissRequest = { expanded = false }
                     ) {
                         DropdownMenuItem(
-                            text = { Text("Option 1") },
-                            onClick = { expanded = false }
+                            text = { Text("OpenInNew") },
+                            onClick = {
+//                                navController.navigateToNavRoute(route = TrebleActivityDestination)
+                                expanded = false
+                            }
                         )
                         DropdownMenuItem(
                             text = { Text("Option 2") },

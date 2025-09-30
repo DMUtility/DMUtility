@@ -37,16 +37,19 @@ class AndroidToFlutter {
 class DMUtilityApp extends StatelessWidget {
   const DMUtilityApp({super.key});
 
+  /// 主题
   final MaterialTheme theme = const MaterialTheme();
 
+  /// 获取系统栏图标深色/浅色
   Brightness getSystemBarBrightness(BuildContext context) {
     if (MediaQuery.platformBrightnessOf(context) == Brightness.light) {
-      return Brightness.dark;
+      return Brightness.dark; // 浅色主题深色系统栏图标
     } else {
-      return Brightness.light;
+      return Brightness.light; // 深色主题浅色系统栏图标
     }
   }
 
+  /// 主题
   ThemeData getTheme(BuildContext context, ThemeData origin) {
     return origin.copyWith(
       appBarTheme: AppBarTheme(

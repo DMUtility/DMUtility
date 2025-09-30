@@ -33,6 +33,9 @@ data object TrebleKitDestination
 @Serializable
 data object SettingsDestination
 
+@Serializable
+data object ActivityTestDestination
+
 data class AppDestination<T>(
     val label: Int,
     val route: T,

@@ -1,6 +1,7 @@
 package com.wyq0918dev.dmutility.ui.utils
 
 import androidx.compose.foundation.pager.PagerState
+import androidx.core.os.bundleOf
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy

@@ -1,10 +1,16 @@
 package com.wyq0918dev.dmutility.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
@@ -14,15 +20,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.os.bundleOf
+import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import androidx.window.core.layout.WindowWidthSizeClass
+import com.wyq0918dev.dmutility.MainActivity
+import com.wyq0918dev.dmutility.TestActivity
 import com.wyq0918dev.dmutility.ui.destination.DiscoverDestination
 import com.wyq0918dev.dmutility.ui.destination.HomeDestination
 import com.wyq0918dev.dmutility.ui.destination.SettingsDestination
 import com.wyq0918dev.dmutility.ui.destination.ToolsDestination
+import com.wyq0918dev.dmutility.ui.navigation.ActivityTestDestination
 import com.wyq0918dev.dmutility.ui.navigation.DiscoverDestination
 import com.wyq0918dev.dmutility.ui.navigation.HomeDestination
 import com.wyq0918dev.dmutility.ui.navigation.SettingsDestination
@@ -49,6 +62,12 @@ fun ActivityMain() {
             )
         }
     }
+
+//    val windowWidth = getWindowSize().width
+//
+//    val easing = SpringEasing.gentle()
+//    val duration = easing.durationMillis.toInt()
+
     NavigationSuiteScaffold(
         navigationSuiteItems = {
             appDestination.forEach { destination ->
@@ -95,7 +114,7 @@ fun ActivityMain() {
             modifier = Modifier.fillMaxSize(),
         ) {
             composable<HomeDestination> {
-                HomeDestination()
+                HomeDestination(navController = navController)
             }
             composable<ToolsDestination> {
                 ToolsDestination()
@@ -106,6 +125,11 @@ fun ActivityMain() {
             composable<SettingsDestination> {
                 SettingsDestination()
             }
+
+            activity<ActivityTestDestination> {
+                activityClass = TestActivity::class
+            }
+
         }
     }
 }

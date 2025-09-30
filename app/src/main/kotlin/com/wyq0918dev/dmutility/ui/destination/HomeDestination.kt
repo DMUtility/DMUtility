@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -21,11 +22,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.wyq0918dev.dmutility.R
+import com.wyq0918dev.dmutility.ui.navigation.ActivityTestDestination
+import com.wyq0918dev.dmutility.ui.utils.navigateToNavRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeDestination(modifier: Modifier = Modifier) {
+fun HomeDestination(
+    modifier: Modifier = Modifier,
+    navController: NavHostController? = null,
+) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
@@ -42,6 +49,14 @@ fun HomeDestination(modifier: Modifier = Modifier) {
                 .padding(paddingValues = innerPadding)
         ) {
             BannerCarousel() // 500x300px
+
+            ElevatedButton(
+                onClick = {
+                    navController?.navigate(ActivityTestDestination)
+                }
+            ) {
+                Text(text = "ActivityTestDestination")
+            }
         }
     }
 }

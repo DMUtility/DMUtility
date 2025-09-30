@@ -208,6 +208,7 @@ fun DiscoverDestination(
                 )
 
                 TrebleKitDestination -> TrebleKitDestination(
+                    navController = navController,
                     animateToDashboard = {
                         coroutineScope.launch {
                             pageState.navigateToPagerRoute(
