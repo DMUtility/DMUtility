@@ -49,10 +49,6 @@ import com.wyq0918dev.dmutility.ui.navigation.DashboardDestination
 import com.wyq0918dev.dmutility.ui.navigation.HomeDestination
 import com.wyq0918dev.dmutility.ui.navigation.TrebleKitDestination
 import com.wyq0918dev.dmutility.ui.navigation.discoverDestination
-import com.wyq0918dev.dmutility.ui.theme.CapsuleEdgePadding
-import com.wyq0918dev.dmutility.ui.theme.CapsuleHeight
-import com.wyq0918dev.dmutility.ui.theme.CapsuleIndent
-import com.wyq0918dev.dmutility.ui.theme.CapsuleWidth
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 import com.wyq0918dev.dmutility.ui.utils.NoOnClick
 import com.wyq0918dev.dmutility.ui.utils.navigateToPagerRoute
@@ -81,14 +77,14 @@ fun DiscoverDestination(
                         .fillMaxWidth()
                         .wrapContentHeight(),
                     title = {
-                        Text(text = stringResource(R.string.destination_discover))
+                        Text(text = stringResource(id = R.string.destination_discover))
                     },
                     navigationIcon = {
                         Box(
                             modifier = Modifier
-                                .padding(start = CapsuleEdgePadding)
-                                .width(width = CapsuleWidth)
-                                .height(height = CapsuleHeight)
+                                .padding(start = 12.dp)
+                                .width(width = 87.dp)
+                                .height(height = 32.dp)
                                 .clip(shape = ContinuousCapsule)
                                 .background(color = MaterialTheme.colorScheme.surfaceContainerHighest)
                                 .clickable(onClick = {}),
@@ -117,9 +113,9 @@ fun DiscoverDestination(
                     actions = {
                         Row(
                             modifier = Modifier
-                                .padding(end = CapsuleEdgePadding)
-                                .height(height = CapsuleHeight)
-                                .width(width = CapsuleWidth)
+                                .padding(end = 12.dp)
+                                .height(height = 32.dp)
+                                .width(width = 87.dp)
                                 .clip(shape = ContinuousCapsule)
                                 .background(color = MaterialTheme.colorScheme.surfaceContainerHighest),
                             verticalAlignment = Alignment.CenterVertically,
@@ -138,9 +134,9 @@ fun DiscoverDestination(
                             }
                             VerticalDivider(
                                 modifier = Modifier
-                                    .padding(vertical = CapsuleIndent)
+                                    .fillMaxHeight()
                                     .wrapContentWidth()
-                                    .fillMaxHeight(),
+                                    .padding(vertical = 5.dp),
                             )
                             Box(
                                 modifier = Modifier
@@ -174,7 +170,9 @@ fun DiscoverDestination(
                             selected = isCurrent,
                             onClick = {
                                 if (!isCurrent) coroutineScope.launch {
-                                    pageState.navigateToPagerRoute(route = destination.route)
+                                    pageState.navigateToPagerRoute(
+                                        route = destination.route,
+                                    )
                                 }
                             },
                             text = {
