@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class PlatformResources {
-  const PlatformResources();
+class PlatformImage extends StatefulWidget {
+  const PlatformImage({super.key, required this.name});
+
+  final String name;
+
+  @override
+  State<PlatformImage> createState() => _PlatformImageState();
+}
+
+class _PlatformImageState extends State<PlatformImage> {
+  _PlatformImageState();
 
   static const MethodChannel _channel = MethodChannel("platform_resources");
+
+  // 图片数据
+  Uint8List? image;
 
   Future<Uint8List?> drawableMipmap(String name, bool isDrawable) async {
     return await _channel.invokeMethod<Uint8List>("drawableMipmap", {
@@ -12,35 +24,12 @@ class PlatformResources {
       "is_drawable": isDrawable,
     });
   }
-}
-
-class BasePlatformImage extends StatefulWidget {
-  const BasePlatformImage({
-    super.key,
-    required this.name,
-    required this.isDrawable,
-  });
-
-  final String name;
-  final bool isDrawable;
-
-  @override
-  State<BasePlatformImage> createState() => _BasePlatformImageState();
-}
-
-class _BasePlatformImageState extends State<BasePlatformImage> {
-  _BasePlatformImageState();
-
-  final PlatformResources platformResources = const PlatformResources();
-
-  // 图片数据
-  Uint8List? image;
 
   @override
   void initState() {
     super.initState();
-    platformResources
-        .drawableMipmap(widget.name, widget.isDrawable)
+    _channel
+        .invokeMethod<Uint8List>(widget.name)
         .then((value) => setState(() => image = value))
         .catchError((error) => debugPrint(error));
   }
@@ -51,33 +40,44 @@ class _BasePlatformImageState extends State<BasePlatformImage> {
   }
 }
 
-class DrawableImage extends StatelessWidget {
-  const DrawableImage({super.key, required this.name});
+abstract class BaseLogo extends StatelessWidget {
+  const BaseLogo({super.key, this.size = 56, this.radius = 12});
 
-  final String name;
+  final double size;
+  final double radius;
+
+  String get name;
 
   @override
   Widget build(BuildContext context) {
-    return BasePlatformImage(name: name, isDrawable: true);
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(radius),
+      child: SizedBox(
+        width: size,
+        height: size,
+        child: PlatformImage(name: name),
+      ),
+    );
   }
 }
 
-class MipmapImage extends StatelessWidget {
-  const MipmapImage({super.key, required this.name});
-
-  final String name;
+class FreeFEOSLogo extends BaseLogo {
+  const FreeFEOSLogo({super.key, super.size, super.radius});
 
   @override
-  Widget build(BuildContext context) {
-    return BasePlatformImage(name: name, isDrawable: false);
-  }
+  String get name => 'freefeos';
 }
 
-class EcosedKitLogo extends StatelessWidget {
-  const EcosedKitLogo({super.key});
+class EcosedKitLogo extends BaseLogo {
+  const EcosedKitLogo({super.key, super.size, super.radius});
 
   @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
+  String get name => 'ecosedkit';
+}
+
+class EbKitLogo extends BaseLogo {
+  const EbKitLogo({super.key, super.size, super.radius});
+
+  @override
+  String get name => 'ebkit';
 }

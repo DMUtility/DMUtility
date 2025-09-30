@@ -24,8 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.wyq0918dev.dmutility.R
-import com.wyq0918dev.dmutility.ui.navigation.ActivityTestDestination
-import com.wyq0918dev.dmutility.ui.utils.navigateToNavRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,14 +47,6 @@ fun HomeDestination(
                 .padding(paddingValues = innerPadding)
         ) {
             BannerCarousel() // 500x300px
-
-            ElevatedButton(
-                onClick = {
-                    navController?.navigate(ActivityTestDestination)
-                }
-            ) {
-                Text(text = "ActivityTestDestination")
-            }
         }
     }
 }

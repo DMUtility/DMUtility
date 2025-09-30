@@ -56,10 +56,6 @@ dependencies {
     implementation("com.github.Kyant0:Capsule:2.1.0")
     implementation("com.google.accompanist:accompanist-coil:0.15.0")
     implementation("com.google.accompanist:accompanist-drawablepainter:0.37.3")
-
-    implementation("org.lsposed.hiddenapibypass:hiddenapibypass:6.1")
-    implementation("dev.rikka.shizuku:api:13.1.5")
-    implementation("dev.rikka.shizuku:provider:13.1.5")
     implementation("com.blankj:utilcodex:1.31.1")
 
     implementation(libs.androidx.core.ktx)

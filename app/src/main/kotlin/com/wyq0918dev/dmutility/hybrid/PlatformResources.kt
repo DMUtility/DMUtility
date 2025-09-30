@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
+import com.wyq0918dev.dmutility.R
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -46,6 +47,10 @@ class PlatformResources : FlutterPlugin, MethodChannel.MethodCallHandler {
                 val byteArray = drawableToByteArray(id!!)
                 result.success(byteArray)
             }
+
+            "freefeos" -> result.success(drawableToByteArray(R.drawable.ic_freefeos))
+            "ecosedkit" -> result.success(drawableToByteArray(R.drawable.ic_ecosedkit))
+            "ebkit" -> result.success(drawableToByteArray(R.drawable.ic_ebkit))
 
             else -> result.notImplemented()
         }

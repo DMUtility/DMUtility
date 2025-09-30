@@ -95,7 +95,15 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('EcosedKit'),
         actions: const [CapsulePlaceholder()],
       ),
-      body: Column(children: [Header(), StateCard()]),
+      body: Column(children: [
+        Header(),
+        StateCard(),
+
+        FreeFEOSLogo(),
+        EcosedKitLogo(),
+        EbKitLogo(),
+
+      ]),
     );
   }
 }
@@ -109,15 +117,7 @@ class Header extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 30),
       child: Row(
         children: [
-          //Image.asset('assets/logo.png', width: 56)
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: SizedBox(
-              width: 56,
-              height: 56,
-              child: MipmapImage(name: 'ic_ecosedkit'),
-            ),
-          ),
+          EcosedKitLogo(),
           Padding(
             padding: EdgeInsets.only(left: 16),
             child: Text(

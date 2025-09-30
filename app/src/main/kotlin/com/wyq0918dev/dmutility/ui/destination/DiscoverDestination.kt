@@ -46,14 +46,12 @@ import androidx.navigation.NavHostController
 import com.kyant.capsule.ContinuousCapsule
 import com.wyq0918dev.dmutility.R
 import com.wyq0918dev.dmutility.ui.navigation.DashboardDestination
-import com.wyq0918dev.dmutility.ui.navigation.HomeDestination
 import com.wyq0918dev.dmutility.ui.navigation.TrebleKitDestination
 import com.wyq0918dev.dmutility.ui.navigation.discoverDestination
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 import com.wyq0918dev.dmutility.ui.utils.NoOnClick
-import com.wyq0918dev.dmutility.ui.utils.navigateToPagerRoute
 import com.wyq0918dev.dmutility.ui.utils.isCurrentPagerDestination
-import com.wyq0918dev.dmutility.ui.utils.navigateToNavRoute
+import com.wyq0918dev.dmutility.ui.utils.navigateToPagerRoute
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -193,29 +191,12 @@ fun DiscoverDestination(
         ) { page ->
             when (discoverDestination[page].route) {
                 DashboardDestination -> DashboardDestination(
-                    popBackStack = {
-                        navController.navigateToNavRoute(
-                            route = HomeDestination,
-                        )
-                    },
-                    animateToTreble = {
-                        coroutineScope.launch {
-                            pageState.navigateToPagerRoute(
-                                route = TrebleKitDestination
-                            )
-                        }
-                    },
+                    navController = navController,
+                    pageState = pageState,
                 )
 
                 TrebleKitDestination -> TrebleKitDestination(
-                    navController = navController,
-                    animateToDashboard = {
-                        coroutineScope.launch {
-                            pageState.navigateToPagerRoute(
-                                route = DashboardDestination
-                            )
-                        }
-                    },
+                    pageState = pageState,
                 )
 
                 else -> Box(

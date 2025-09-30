@@ -10,11 +10,15 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
 import com.wyq0918dev.dmutility.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsDestination(modifier: Modifier = Modifier) {
+fun SettingsDestination(
+    modifier: Modifier = Modifier,
+    navController: NavHostController? = null,
+) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
