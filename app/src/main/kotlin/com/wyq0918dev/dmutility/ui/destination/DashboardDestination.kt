@@ -55,7 +55,7 @@ import com.kyant.capsule.ContinuousCapsule
 import com.kyant.capsule.ContinuousRoundedRectangle
 import com.wyq0918dev.dmutility.R
 import com.wyq0918dev.dmutility.ui.navigation.HomeDestination
-import com.wyq0918dev.dmutility.ui.navigation.TrebleKitDestination
+import com.wyq0918dev.dmutility.ui.navigation.PlatformDestination
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 import com.wyq0918dev.dmutility.ui.utils.NoOnClick
 import com.wyq0918dev.dmutility.ui.utils.navigateToNavRoute
@@ -95,7 +95,7 @@ fun DashboardDestination(
             animateToTreble = {
                 coroutineScope.launch {
                     pageState.navigateToPagerRoute(
-                        route = TrebleKitDestination
+                        route = PlatformDestination
                     )
                 }
             },
@@ -335,7 +335,7 @@ fun RecentPlayer(
             }
         }
         Text(
-            text = "TrebleKit",
+            text = "Treble",
             fontSize = 15.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()

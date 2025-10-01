@@ -41,7 +41,6 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.kyant.capsule.ContinuousRoundedRectangle
 import com.wyq0918dev.dmutility.R
 import com.wyq0918dev.dmutility.hybrid.FlutterView
@@ -52,7 +51,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TrebleKitDestination(
+fun PlatformDestination(
     modifier: Modifier = Modifier,
     pageState: PagerState? = null,
 ) {
@@ -79,7 +78,7 @@ fun TrebleKitDestination(
         ) {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = R.string.treblekit_actionbar_title))
+                    Text(text = stringResource(id = R.string.platform_actionbar_title))
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -120,7 +119,7 @@ fun TrebleKitDestination(
                             }
                         },
                         text = {
-                            Text(text = "Treble平台是基于Flutter和Kotlin自研的核心软件平台. 由FreeFEOS, EcosedKit和EbKit三大部分组成. 分别是核心组件, 应用层组件和平台能力桥接组件.")
+                            Text(text = "Treble平台是基于Dart和Kotlin自研的核心软件平台. 由FreeFEOS, EcosedKit和EbKit三大部分组成. 分别是核心组件, 应用层组件和平台能力桥接组件.")
                         },
                     )
                     DropdownMenu(
@@ -208,8 +207,8 @@ fun TrebleKitDestination(
 
 @Preview(showBackground = true)
 @Composable
-fun TrebleKitDestinationPreview() {
+fun PlatformDestinationPreview() {
     DMUtilityTheme {
-        TrebleKitDestination()
+        PlatformDestination()
     }
 }

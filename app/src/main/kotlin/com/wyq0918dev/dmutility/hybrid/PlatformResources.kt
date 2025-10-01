@@ -20,12 +20,18 @@ class PlatformResources : FlutterPlugin, MethodChannel.MethodCallHandler {
     /** 应用程序上下文 */
     private lateinit var mContext: Context
 
+    /**
+     * 附加到引擎
+     */
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         mContext = binding.applicationContext
         mChannel = MethodChannel(binding.binaryMessenger, PLATFORM_RESOURCES_CHANNEL)
         mChannel.setMethodCallHandler(this)
     }
 
+    /**
+     * 从引擎分离
+     */
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         mChannel.setMethodCallHandler(null)
     }
@@ -35,23 +41,9 @@ class PlatformResources : FlutterPlugin, MethodChannel.MethodCallHandler {
      */
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
-            "drawableMipmap" -> {
-                val name: String? = call.argument("name")
-                val isDrawable: Boolean = call.argument("is_drawable") ?: false
-                val id: Int? = mContext.resources?.getIdentifier(
-                    name,
-                    if (isDrawable) "drawable" else "mipmap",
-                    mContext.packageName,
-                )
-
-                val byteArray = drawableToByteArray(id!!)
-                result.success(byteArray)
-            }
-
-            "freefeos" -> result.success(drawableToByteArray(R.drawable.ic_freefeos))
-            "ecosedkit" -> result.success(drawableToByteArray(R.drawable.ic_ecosedkit))
-            "ebkit" -> result.success(drawableToByteArray(R.drawable.ic_ebkit))
-
+            "freefeos" -> result.success(drawableToByteArray(id = R.drawable.ic_freefeos))
+            "ecosedkit" -> result.success(drawableToByteArray(id = R.drawable.ic_ecosedkit))
+            "ebkit" -> result.success(drawableToByteArray(id = R.drawable.ic_ebkit))
             else -> result.notImplemented()
         }
     }
@@ -83,4 +75,3 @@ class PlatformResources : FlutterPlugin, MethodChannel.MethodCallHandler {
         const val PLATFORM_RESOURCES_CHANNEL: String = "platform_resources"
     }
 }
-

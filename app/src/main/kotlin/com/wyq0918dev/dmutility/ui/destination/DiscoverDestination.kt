@@ -46,7 +46,7 @@ import androidx.navigation.NavHostController
 import com.kyant.capsule.ContinuousCapsule
 import com.wyq0918dev.dmutility.R
 import com.wyq0918dev.dmutility.ui.navigation.DashboardDestination
-import com.wyq0918dev.dmutility.ui.navigation.TrebleKitDestination
+import com.wyq0918dev.dmutility.ui.navigation.PlatformDestination
 import com.wyq0918dev.dmutility.ui.navigation.discoverDestination
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 import com.wyq0918dev.dmutility.ui.utils.NoOnClick
@@ -195,7 +195,7 @@ fun DiscoverDestination(
                     pageState = pageState,
                 )
 
-                TrebleKitDestination -> TrebleKitDestination(
+                PlatformDestination -> PlatformDestination(
                     pageState = pageState,
                 )
 
