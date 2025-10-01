@@ -253,7 +253,7 @@ fun MPPlayer(
                 appIcon = rememberDrawablePainter(
                     drawable = AppCompatResources.getDrawable(
                         context,
-                        R.mipmap.ic_launcher,
+                        R.drawable.ic_launcher,
                     ),
                 ),
                 appName = stringResource(id = R.string.app_name),

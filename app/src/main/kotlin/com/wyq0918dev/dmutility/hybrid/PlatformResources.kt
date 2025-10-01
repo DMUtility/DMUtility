@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import androidx.core.content.ContextCompat
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.createBitmap
 import com.wyq0918dev.dmutility.R
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -52,7 +52,7 @@ class PlatformResources : FlutterPlugin, MethodChannel.MethodCallHandler {
      * 绘制Drawable为PNG格式二进制数据
      */
     private fun drawableToByteArray(id: Int): ByteArray {
-        val drawable: Drawable? = ContextCompat.getDrawable(mContext, id)
+        val drawable: Drawable? = AppCompatResources.getDrawable(mContext, id)
         if (drawable != null) {
             val bitmap = createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight)
             val canvas = Canvas(bitmap)
