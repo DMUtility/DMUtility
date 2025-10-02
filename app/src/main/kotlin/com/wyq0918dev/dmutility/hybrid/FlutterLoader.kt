@@ -13,7 +13,7 @@ import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
 
 /** Flutter引擎ID */
-const val ENGINE_ID: String = "treblekit_flutter"
+private const val ENGINE_ID: String = "dm_utility_flutter"
 
 /**
  * 初始化Flutter引擎

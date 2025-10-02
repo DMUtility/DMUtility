@@ -18,10 +18,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowWidthSizeClass
+import com.wyq0918dev.dmutility.ui.destination.ContainerDestination
 import com.wyq0918dev.dmutility.ui.destination.DiscoverDestination
 import com.wyq0918dev.dmutility.ui.destination.HomeDestination
 import com.wyq0918dev.dmutility.ui.destination.SettingsDestination
 import com.wyq0918dev.dmutility.ui.destination.ToolsDestination
+import com.wyq0918dev.dmutility.ui.navigation.ContainerDestination
 import com.wyq0918dev.dmutility.ui.navigation.DiscoverDestination
 import com.wyq0918dev.dmutility.ui.navigation.HomeDestination
 import com.wyq0918dev.dmutility.ui.navigation.SettingsDestination
@@ -30,6 +32,7 @@ import com.wyq0918dev.dmutility.ui.navigation.appDestination
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 import com.wyq0918dev.dmutility.ui.utils.isCurrentNavDestination
 import com.wyq0918dev.dmutility.ui.utils.navigateToNavRoute
+
 
 @Composable
 fun ActivityMain() {
@@ -103,6 +106,9 @@ fun ActivityMain() {
             }
             composable<SettingsDestination> {
                 SettingsDestination(navController = navController)
+            }
+            composable<ContainerDestination> {
+                ContainerDestination(navController = navController)
             }
         }
     }

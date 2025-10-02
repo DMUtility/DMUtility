@@ -33,6 +33,9 @@ data object PlatformDestination
 @Serializable
 data object SettingsDestination
 
+@Serializable
+data object ContainerDestination
+
 data class AppDestination<T>(
     val label: Int,
     val route: T,

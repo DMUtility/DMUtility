@@ -174,7 +174,11 @@ fun DiscoverDestination(
                                 }
                             },
                             text = {
-                                Text(text = stringResource(id = destination.label))
+                                Text(
+                                    text = stringResource(
+                                        id = destination.label,
+                                    ),
+                                )
                             },
                         )
                     }

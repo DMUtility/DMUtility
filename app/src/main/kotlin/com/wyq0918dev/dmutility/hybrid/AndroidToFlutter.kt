@@ -5,17 +5,10 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.EventChannel
 import java.util.concurrent.atomic.AtomicBoolean
 
-/** 事件通道事件接收器 */
-private var mEventSink: EventChannel.EventSink? = null
-
-/** 事件通道监听状态 */
-private val mListeningState = AtomicBoolean(false)
-
 class AndroidToFlutter : FlutterPlugin, EventChannel.StreamHandler {
+
     /** Flutter 事件通道 */
     private lateinit var mEventChannel: EventChannel
-
-
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         // 初始化事件通道
@@ -30,7 +23,7 @@ class AndroidToFlutter : FlutterPlugin, EventChannel.StreamHandler {
 
     override fun onListen(
         arguments: Any?,
-        events: EventChannel.EventSink?
+        events: EventChannel.EventSink?,
     ) {
         if (events != null) mEventSink = events
         else {
@@ -48,23 +41,34 @@ class AndroidToFlutter : FlutterPlugin, EventChannel.StreamHandler {
         }
     }
 
-}
+    companion object {
 
-fun sendData(data: String) {
-    if (mListeningState.get()) {
-        try {
-            mEventSink?.success(
-                mapOf(
-                    "type" to "takeString",
-                    "data" to data,
-                )
-            )
-        } catch (e: Exception) {
-            mEventSink?.error(
-                "GODOT_EVENT_ERROR",
-                e.message,
-                null,
-            )
+        /** 事件通道事件接收器 */
+        private var mEventSink: EventChannel.EventSink? = null
+
+        /** 事件通道监听状态 */
+        private val mListeningState = AtomicBoolean(false)
+
+        /**
+         * 发送数据到Flutter
+         */
+        fun sendData(data: String) {
+            if (mListeningState.get()) {
+                try {
+                    mEventSink?.success(
+                        mapOf(
+                            "type" to "takeString",
+                            "data" to data,
+                        )
+                    )
+                } catch (e: Exception) {
+                    mEventSink?.error(
+                        "GODOT_EVENT_ERROR",
+                        e.message,
+                        null,
+                    )
+                }
+            }
         }
     }
 }

@@ -1,7 +1,5 @@
 package com.wyq0918dev.dmutility.ui.destination
 
-import android.content.Intent
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.wyq0918dev.dmutility.R
-import com.wyq0918dev.dmutility.TestActivity
+import com.wyq0918dev.dmutility.ui.navigation.ContainerDestination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,18 +36,12 @@ fun ToolsDestination(
                 .fillMaxSize()
                 .padding(paddingValues = innerPadding)
         ) {
-            val activity = LocalActivity.current
             ElevatedButton(
                 onClick = {
-                    activity?.startActivity(
-                        Intent(
-                            activity,
-                            TestActivity::class.java,
-                        ),
-                    )
+                   navController?.navigate(route = ContainerDestination)
                 }
             ) {
-                Text(text = "Activity")
+                Text(text = "Container")
             }
         }
     }
