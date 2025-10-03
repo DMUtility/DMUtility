@@ -1,5 +1,6 @@
 package com.wyq0918dev.dmutility.ui.destination
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -11,7 +12,9 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.OpenInNew
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.twotone.Category
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
@@ -44,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import com.kyant.capsule.ContinuousRoundedRectangle
 import com.wyq0918dev.dmutility.R
 import com.wyq0918dev.dmutility.hybrid.FlutterView
+import com.wyq0918dev.dmutility.hybrid.startFloatFlutter
 import com.wyq0918dev.dmutility.ui.navigation.DashboardDestination
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 import com.wyq0918dev.dmutility.ui.utils.navigateToPagerRoute
@@ -58,6 +62,7 @@ fun PlatformDestination(
     val coroutineScope = rememberCoroutineScope()
     var dropdownExpanded by remember { mutableStateOf(value = false) }
     var aboutExpanded by remember { mutableStateOf(value = false) }
+    val activity = LocalActivity.current
     Column(
         modifier = modifier.fillMaxSize(),
     ) {
@@ -115,7 +120,7 @@ fun PlatformDestination(
                         },
                         confirmButton = {
                             TextButton(onClick = { aboutExpanded = false }) {
-                                Text(text = "OK")
+                                Text(text = "确定")
                             }
                         },
                         text = {
@@ -129,21 +134,34 @@ fun PlatformDestination(
                         },
                     ) {
                         DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Outlined.Info,
+                                    contentDescription = null,
+                                )
+                            },
                             text = {
                                 Text(text = "关于")
                             },
                             onClick = {
                                 aboutExpanded = true
                                 dropdownExpanded = false
-                            }
+                            },
                         )
                         DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Outlined.OpenInNew,
+                                    contentDescription = null,
+                                )
+                            },
                             text = {
-                                Text(text = "Option 2")
+                                Text(text = "在新页面中打开")
                             },
                             onClick = {
+                                activity.startFloatFlutter()
                                 dropdownExpanded = false
-                            }
+                            },
                         )
                     }
                     IconButton(
@@ -181,8 +199,7 @@ fun PlatformDestination(
                         TopAppBar(
                             title = {
                                 Text(text = "EcosedKit")
-                            },
-                            windowInsets = WindowInsets()
+                            }, windowInsets = WindowInsets()
                         )
                     },
                     contentWindowInsets = WindowInsets(),

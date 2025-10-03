@@ -17,7 +17,7 @@ abstract class HybridActivity : AppCompatActivity(), IViewFactory {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mFlutterFragment = loadFlutterFragment()
+        mFlutterFragment = loadEmbedFlutterFragment()
     }
 
     override fun onPostResume() {

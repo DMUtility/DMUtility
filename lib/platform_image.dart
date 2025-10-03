@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+enum ImageDrawable {
+  freefeos(method: 'freefeos'),
+  ecosedkit(method: 'ecosedkit'),
+  ebkit(method: 'ebkit');
+
+  final String method;
+
+  const ImageDrawable({required this.method});
+}
+
 abstract class _PlatformImage extends StatefulWidget {
   const _PlatformImage({super.key, this.size = 56, this.radius = 12});
 
   final double size;
   final double radius;
 
-  String get name;
+  ImageDrawable get image;
 
   @override
   State<_PlatformImage> createState() => _PlatformImageState();
@@ -22,7 +32,7 @@ class _PlatformImageState extends State<_PlatformImage> {
   void initState() {
     super.initState();
     const MethodChannel("platform_resources")
-        .invokeMethod<Uint8List>(widget.name)
+        .invokeMethod<Uint8List>(widget.image.method)
         .then((value) => setState(() => image = value))
         .catchError((error) => debugPrint(error));
   }
@@ -46,19 +56,19 @@ class FreeFEOSLogo extends _PlatformImage {
   const FreeFEOSLogo({super.key, super.size, super.radius});
 
   @override
-  String get name => 'freefeos';
+  ImageDrawable get image => ImageDrawable.freefeos;
 }
 
 class EcosedKitLogo extends _PlatformImage {
   const EcosedKitLogo({super.key, super.size, super.radius});
 
   @override
-  String get name => 'ecosedkit';
+  ImageDrawable get image => ImageDrawable.ecosedkit;
 }
 
 class EbKitLogo extends _PlatformImage {
   const EbKitLogo({super.key, super.size, super.radius});
 
   @override
-  String get name => 'ebkit';
+  ImageDrawable get image => ImageDrawable.ebkit;
 }

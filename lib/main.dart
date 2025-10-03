@@ -1,84 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:freefeos/freefeos.dart';
-import 'package:multi_builder/multi_builder.dart';
 
+import 'app.dart';
 import 'capsule_placeholder.dart';
 import 'platform_image.dart';
-import 'theme.dart';
 
 void main() => runApp(const DMUtilityApp());
 
-class AndroidToFlutter {
-  final EventChannel _eventStream = const EventChannel("android_to_flutter");
 
-  StreamSubscription<dynamic> listenNativeData({
-    required Function(String data) callback,
-  }) {
-    return _eventStream.receiveBroadcastStream().listen((dynamic event) {
-      if (event is Map && event["type"] != null) {
-        switch (event["type"]) {
-          case "takeString":
-            callback(event["data"]);
-            break;
-          default:
-            debugPrint("未知事件类型: ${event["type"]}");
-            break;
-        }
-      } else {
-        debugPrint("未知事件: $event");
-      }
-    }, onError: (error) => debugPrint(error.toString()));
-  }
-}
-
-class DMUtilityApp extends StatelessWidget {
-  const DMUtilityApp({super.key});
-
-  /// 主题
-  final MaterialTheme theme = const MaterialTheme();
-
-  /// 获取系统栏图标深色/浅色
-  Brightness getSystemBarBrightness(BuildContext context) {
-    if (MediaQuery.platformBrightnessOf(context) == Brightness.light) {
-      return Brightness.dark; // 浅色主题深色系统栏图标
-    } else {
-      return Brightness.light; // 深色主题浅色系统栏图标
-    }
-  }
-
-  /// 主题
-  ThemeData getTheme(BuildContext context, ThemeData origin) {
-    return origin.copyWith(
-      appBarTheme: AppBarTheme(
-        systemOverlayStyle: SystemUiOverlayStyle(
-          systemNavigationBarColor: Colors.transparent,
-          systemNavigationBarDividerColor: Colors.transparent,
-          systemNavigationBarIconBrightness: getSystemBarBrightness(context),
-          systemNavigationBarContrastEnforced: false,
-          statusBarColor: Colors.transparent,
-          statusBarBrightness: getSystemBarBrightness(context),
-          statusBarIconBrightness: getSystemBarBrightness(context),
-          systemStatusBarContrastEnforced: false,
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TrebleKit',
-      theme: getTheme(context, theme.light()),
-      darkTheme: getTheme(context, theme.dark()),
-      builder: <TransitionBuilder>[FreeFEOS.builder].toBuilder,
-      home: const MyHomePage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -95,15 +23,16 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('EcosedKit'),
         actions: const [CapsulePlaceholder()],
       ),
-      body: Column(children: [
-        Header(),
-        StateCard(),
+      body: Column(
+        children: [
+          Header(),
+          StateCard(),
 
-        FreeFEOSLogo(),
-        EcosedKitLogo(),
-        EbKitLogo(),
-
-      ]),
+          FreeFEOSLogo(),
+          EcosedKitLogo(),
+          EbKitLogo(),
+        ],
+      ),
     );
   }
 }

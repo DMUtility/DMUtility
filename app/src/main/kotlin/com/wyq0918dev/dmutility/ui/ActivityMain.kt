@@ -13,11 +13,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.ActivityNavigator
+import androidx.navigation.ActivityNavigatorDestinationBuilder
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.createGraph
+import androidx.navigation.get
 import androidx.window.core.layout.WindowWidthSizeClass
+import com.wyq0918dev.dmutility.TestActivity
 import com.wyq0918dev.dmutility.ui.destination.ContainerDestination
 import com.wyq0918dev.dmutility.ui.destination.DiscoverDestination
 import com.wyq0918dev.dmutility.ui.destination.HomeDestination
@@ -27,12 +34,12 @@ import com.wyq0918dev.dmutility.ui.navigation.ContainerDestination
 import com.wyq0918dev.dmutility.ui.navigation.DiscoverDestination
 import com.wyq0918dev.dmutility.ui.navigation.HomeDestination
 import com.wyq0918dev.dmutility.ui.navigation.SettingsDestination
+import com.wyq0918dev.dmutility.ui.navigation.TestActivityDestination
 import com.wyq0918dev.dmutility.ui.navigation.ToolsDestination
 import com.wyq0918dev.dmutility.ui.navigation.appDestination
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 import com.wyq0918dev.dmutility.ui.utils.isCurrentNavDestination
 import com.wyq0918dev.dmutility.ui.utils.navigateToNavRoute
-
 
 @Composable
 fun ActivityMain() {
@@ -50,6 +57,37 @@ fun ActivityMain() {
             )
         }
     }
+
+    val navGraph = navController.createGraph(
+        startDestination = HomeDestination,
+    ) {
+        composable<HomeDestination> {
+            HomeDestination(navController = navController)
+        }
+        composable<ToolsDestination> {
+            ToolsDestination(navController = navController)
+        }
+        composable<DiscoverDestination> {
+            DiscoverDestination(navController = navController)
+        }
+        composable<SettingsDestination> {
+            SettingsDestination(navController = navController)
+        }
+        composable<ContainerDestination> {
+            ContainerDestination(navController = navController)
+        }
+    }
+
+    navGraph.addDestination(
+        node = ActivityNavigatorDestinationBuilder(
+            navigator = navController.navigatorProvider[ActivityNavigator::class],
+            route = TestActivityDestination::class,
+            typeMap = emptyMap()
+        ).apply {
+            activityClass = TestActivity::class
+        }.build()
+    )
+
     NavigationSuiteScaffold(
         navigationSuiteItems = {
             appDestination.forEach { destination ->
@@ -92,25 +130,9 @@ fun ActivityMain() {
     ) {
         NavHost(
             navController = navController,
-            startDestination = HomeDestination,
+            graph = navGraph,
             modifier = Modifier.fillMaxSize(),
-        ) {
-            composable<HomeDestination> {
-                HomeDestination(navController = navController)
-            }
-            composable<ToolsDestination> {
-                ToolsDestination(navController = navController)
-            }
-            composable<DiscoverDestination> {
-                DiscoverDestination(navController = navController)
-            }
-            composable<SettingsDestination> {
-                SettingsDestination(navController = navController)
-            }
-            composable<ContainerDestination> {
-                ContainerDestination(navController = navController)
-            }
-        }
+        )
     }
 }
 

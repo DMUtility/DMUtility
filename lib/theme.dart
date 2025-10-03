@@ -1,8 +1,7 @@
 import "package:flutter/material.dart";
-import "package:flutter/services.dart";
 
-class MaterialTheme {
-  const MaterialTheme();
+class DMUtilityTheme {
+  const DMUtilityTheme();
 
   static ColorScheme lightScheme() {
     return const ColorScheme(
@@ -53,10 +52,6 @@ class MaterialTheme {
       surfaceContainerHigh: Color(0xffe6e8ee),
       surfaceContainerHighest: Color(0xffe1e2e8),
     );
-  }
-
-  ThemeData light() {
-    return theme(lightScheme());
   }
 
   static ColorScheme darkScheme() {
@@ -110,14 +105,18 @@ class MaterialTheme {
     );
   }
 
-  ThemeData dark() {
-    return theme(darkScheme());
-  }
-
   ThemeData theme(ColorScheme colorScheme) => ThemeData(
     useMaterial3: true,
     brightness: colorScheme.brightness,
     colorScheme: colorScheme,
     canvasColor: colorScheme.surface,
   );
+
+  ThemeData light() {
+    return theme(lightScheme());
+  }
+
+  ThemeData dark() {
+    return theme(darkScheme());
+  }
 }
