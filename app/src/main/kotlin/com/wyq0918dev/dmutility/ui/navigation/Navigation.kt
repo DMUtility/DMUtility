@@ -34,10 +34,7 @@ data object PlatformDestination
 data object SettingsDestination
 
 @Serializable
-data object ContainerDestination
-
-@Serializable
-data object TestActivityDestination
+data object FloatFlutterDestination
 
 data class AppDestination<T>(
     val label: Int,

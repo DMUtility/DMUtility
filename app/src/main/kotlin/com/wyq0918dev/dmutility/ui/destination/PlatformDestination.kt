@@ -44,11 +44,12 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.kyant.capsule.ContinuousRoundedRectangle
 import com.wyq0918dev.dmutility.R
 import com.wyq0918dev.dmutility.hybrid.FlutterView
-import com.wyq0918dev.dmutility.hybrid.startFloatFlutter
 import com.wyq0918dev.dmutility.ui.navigation.DashboardDestination
+import com.wyq0918dev.dmutility.ui.navigation.FloatFlutterDestination
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 import com.wyq0918dev.dmutility.ui.utils.navigateToPagerRoute
 import kotlinx.coroutines.launch
@@ -57,12 +58,12 @@ import kotlinx.coroutines.launch
 @Composable
 fun PlatformDestination(
     modifier: Modifier = Modifier,
+    navController: NavHostController? = null,
     pageState: PagerState? = null,
 ) {
     val coroutineScope = rememberCoroutineScope()
     var dropdownExpanded by remember { mutableStateOf(value = false) }
     var aboutExpanded by remember { mutableStateOf(value = false) }
-    val activity = LocalActivity.current
     Column(
         modifier = modifier.fillMaxSize(),
     ) {
@@ -159,7 +160,7 @@ fun PlatformDestination(
                                 Text(text = "在新页面中打开")
                             },
                             onClick = {
-                                activity.startFloatFlutter()
+                                navController?.navigate(route = FloatFlutterDestination)
                                 dropdownExpanded = false
                             },
                         )

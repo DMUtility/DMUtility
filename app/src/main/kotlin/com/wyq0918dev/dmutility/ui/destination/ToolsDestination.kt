@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.wyq0918dev.dmutility.R
-import com.wyq0918dev.dmutility.ui.navigation.TestActivityDestination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,8 +37,6 @@ fun ToolsDestination(
         ) {
             ElevatedButton(
                 onClick = {
-//                   navController?.navigate(route = ContainerDestination)
-                    navController?.navigate(route = TestActivityDestination)
                 }
             ) {
                 Text(text = "Container")

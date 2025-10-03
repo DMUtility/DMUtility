@@ -17,6 +17,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
+import androidx.navigation.findNavController
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 
 class TestActivity : AppCompatActivity() {

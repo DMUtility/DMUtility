@@ -200,6 +200,7 @@ fun DiscoverDestination(
                 )
 
                 PlatformDestination -> PlatformDestination(
+                    navController = navController,
                     pageState = pageState,
                 )
 
