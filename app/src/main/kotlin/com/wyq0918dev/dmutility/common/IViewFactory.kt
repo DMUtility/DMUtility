@@ -1,4 +1,4 @@
-package com.wyq0918dev.dmutility.hybrid
+package com.wyq0918dev.dmutility.common
 
 import android.view.View
 

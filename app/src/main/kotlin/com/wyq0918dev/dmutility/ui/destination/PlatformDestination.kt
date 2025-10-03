@@ -1,6 +1,5 @@
 package com.wyq0918dev.dmutility.ui.destination
 
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -47,7 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.kyant.capsule.ContinuousRoundedRectangle
 import com.wyq0918dev.dmutility.R
-import com.wyq0918dev.dmutility.hybrid.FlutterView
+import com.wyq0918dev.dmutility.ui.components.FlutterView
 import com.wyq0918dev.dmutility.ui.navigation.DashboardDestination
 import com.wyq0918dev.dmutility.ui.navigation.FloatFlutterDestination
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme

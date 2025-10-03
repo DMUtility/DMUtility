@@ -1,4 +1,4 @@
-package com.wyq0918dev.dmutility.hybrid
+package com.wyq0918dev.dmutility.ui.components
 
 import android.app.Activity
 import android.view.View
@@ -11,21 +11,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import com.wyq0918dev.dmutility.R
+import com.wyq0918dev.dmutility.common.IViewFactory
 import com.wyq0918dev.dmutility.ui.theme.DMUtilityTheme
 
 @Composable
-fun FlutterView(modifier: Modifier = Modifier) {
-    ViewFactory(modifier = modifier) { getFlutterView }
-}
-
-@Preview
-@Composable
-private fun FlutterViewPreview() {
-    FlutterView()
-}
-
-@Composable
-private fun ViewFactory(
+fun ViewFactory(
     modifier: Modifier = Modifier,
     view: IViewFactory.() -> View? = { null },
 ) {
@@ -56,7 +46,7 @@ private fun ViewFactory(
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun ViewFactoryPreview() {
     DMUtilityTheme {

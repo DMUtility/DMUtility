@@ -25,8 +25,9 @@ class AndroidToFlutter : FlutterPlugin, EventChannel.StreamHandler {
         arguments: Any?,
         events: EventChannel.EventSink?,
     ) {
-        if (events != null) mEventSink = events
-        else {
+        if (events != null) {
+            mEventSink = events
+        } else {
             Log.e("TAG", "EventSink 为空")
         }
         if (mListeningState.getAndSet(events != null)) {
